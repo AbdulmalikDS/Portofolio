@@ -32,9 +32,9 @@ export const InteractiveSkills = () => {
           skills: ['Linux', 'Ubuntu', 'Docker', 'Conda', 'Notebooks', 'Colab', 'Postman', 'cURL']
         },
         concepts: {
-          name: 'AI/ML Concepts',
+          name: 'Research Interests',
           color: '#ec4899',
-          skills: ['AGI', 'Agentic AI', 'MCPs', 'CNNs', 'RNNs', 'Attention', 'LLMOps', 'MLOps', 'GenAI', 'Quantum Computing']
+          skills: ['AGI', 'Agentic AI', 'MCPs', 'CNNs', 'RNNs', 'Attention', 'RLHF', 'PPO', 'DQN', 'Policy Gradients', 'LLMOps', 'MLOps', 'GenAI', 'Quantum Computing']
         }
       }
     }
@@ -195,18 +195,7 @@ export const InteractiveSkills = () => {
         </div>
       </div>
 
-      {/* Legend */}
-      <div className="mt-6 flex flex-wrap gap-3 justify-center">
-        {Object.values(currentData.categories).map(category => (
-          <div key={category.name} className="flex items-center gap-2 px-3 py-2 bg-neutral-700/30 rounded-lg text-xs">
-            <div 
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: category.color }}
-            />
-            <span className="text-neutral-300">{category.name}</span>
-          </div>
-        ))}
-      </div>
+
     </div>
   )
 } 
