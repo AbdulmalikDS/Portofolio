@@ -203,7 +203,7 @@ const Portfolio = () => {
         ]
       },
       contact: {
-        title: '.contact()',
+        title: 'Contact',
         description: "I am always on the lookout for new challenges and opportunities to learn and grow. If you have a project or idea that you think I could help with, I would love to hear from you. Please feel free to get in touch via the contact button below or through any of the social media links.",
         cta: 'Say Hello!'
       }
@@ -356,7 +356,7 @@ const Portfolio = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 mb-12">
-            .{currentContent.experience.title.toLowerCase()}()
+            {currentContent.experience.title}
           </h2>
           
           {/* Experience Timeline Container - Minimal design */}
@@ -380,7 +380,7 @@ const Portfolio = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 mb-4">
-            .{currentContent.projects.title.toLowerCase()}()
+            {currentContent.projects.title}
           </h2>
           <p className="text-neutral-400 mb-12">
             {currentContent.projects.subtitle}
