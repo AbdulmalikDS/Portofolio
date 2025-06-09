@@ -8,19 +8,13 @@
     <meta name="keywords" content="AI, Machine Learning, NLP, React, Portfolio, Abdulmalik Alquwayfili" />
     <meta name="author" content="Abdulmalik Alquwayfili" />
     
-    <!-- GitHub Pages SPA redirect script -->
+    <!-- Simplified GitHub Pages SPA redirect script -->
     <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
+      // Simple client-side routing for GitHub Pages
+      if (window.location.search && window.location.search.includes('/?/')) {
+        var path = window.location.search.replace('/?/', '');
+        window.history.replaceState(null, null, window.location.pathname + path);
+      }
     </script>
     
     <!-- Open Graph / Facebook -->
@@ -36,7 +30,7 @@
     <meta property="twitter:description" content="Portfolio showcasing AI/ML projects and professional experience" />
     
     <title>Abdulmalik Alquwayfili - AI/ML Engineer</title>
-    <script type="module" crossorigin src="/Portofolio/assets/index-ecdb4fcd.js"></script>
+    <script type="module" crossorigin src="/Portofolio/assets/index-df26fa76.js"></script>
     <link rel="stylesheet" href="/Portofolio/assets/index-4b86fe33.css">
   </head>
   <body>

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { AnimatedGradientText, RainbowButton } from '../components/ui/modern-theme'
 import ExperienceTimeline from '../components/sections/ExperienceTimeline'
-import { getAssetPath } from '../utils/paths'
+
+
 import { 
   HiDownload, 
   HiMail, 
@@ -144,7 +145,7 @@ const Home = () => {
                   <span>{content.cta.contact}</span>
                 </a>
                 
-                <a href={getAssetPath('resume.pdf')} target="_blank" rel="noopener noreferrer">
+                <a href={"/Portofolio/resume.pdf"} target="_blank" rel="noopener noreferrer">
                   <RainbowButton>
                     <HiDownload className="w-5 h-5 mr-2" />
                     {content.cta.resume}
@@ -152,7 +153,7 @@ const Home = () => {
                 </a>
 
                 <a
-                  href="/Portofolio/projects"
+                  href="/projects"
                   className="group px-6 py-3 bg-transparent border-2 border-neutral-300 dark:border-neutral-600 text-neutral-700 dark:text-neutral-300 rounded-lg hover:border-primary-500 hover:text-primary-500 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105"
                 >
                   <HiCode className="w-5 h-5 group-hover:rotate-12 transition-transform duration-200" />
