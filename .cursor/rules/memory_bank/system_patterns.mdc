@@ -1,0 +1,85 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# System Patterns and Architecture
+
+## Component Architecture
+### Design Principles
+- Use functional components with React hooks
+- Keep components small and focused on one job
+- Share logic through custom hooks
+- Use props for data flow between components
+
+### Folder Structure
+```
+src/
+├── components/
+│   ├── common/          # Shared components (Header, Footer, Button)
+│   ├── layout/          # Layout components (Layout, Navigation)
+│   └── sections/        # Page-specific sections
+├── pages/               # Main page components
+├── hooks/               # Custom React hooks
+├── context/             # React context for global state
+├── data/                # Static content and project data
+├── styles/              # Global styles and themes
+└── utils/               # Helper functions
+```
+
+## State Management
+- Use React Context for global state (theme, language)
+- Use useState for local component state
+- Use useEffect for side effects and data loading
+- Keep state as close to where it's used as possible
+
+## Styling Patterns
+### TailwindCSS Guidelines
+- Use utility classes for styling
+- Create custom classes for repeated patterns
+- Use CSS variables for theme colors
+- Follow mobile-first responsive design
+
+### Theme System
+- Light/Dark mode using CSS custom properties
+- Consistent color palette across all components
+- Typography scale using Tailwind's built-in system
+- Spacing system following 8px grid
+
+## Data Flow Patterns
+- Props down, events up pattern
+- Use custom hooks for data fetching
+- Static content stored in JSON/Markdown files
+- Dynamic content processed through MDX
+
+## Routing Strategy
+- Use React Router for client-side routing
+- Lazy load pages for better performance
+- Handle 404 errors gracefully
+- Support both English and Arabic URLs
+
+## Performance Patterns
+- Code splitting by route
+- Image optimization and lazy loading
+- Minimize JavaScript bundle size
+- Use React.memo for expensive components
+
+## Accessibility Patterns
+- Semantic HTML elements
+- ARIA labels where needed
+- Keyboard navigation support
+- Screen reader friendly content
+- Color contrast compliance
+
+## Internationalization (i18n)
+- Support Arabic (RTL) and English (LTR)
+- Use language context throughout app
+- Store translations in JSON files
+- Handle text direction changes
+
+## Key Decisions Made
+1. **React over other frameworks**: Best for component reusability
+2. **TailwindCSS over styled-components**: Faster development, smaller bundle
+3. **Context over Redux**: Simple state management needs
+4. **Functional components**: Modern React patterns
+5. **GitHub Pages deployment**: Simple, free hosting solution

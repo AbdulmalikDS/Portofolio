@@ -1,0 +1,83 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Portfolio Website Project Brief
+
+## Project Overview
+This is Abdulmalik Alquwayfili's personal portfolio website. It shows his work in AI and machine learning to potential employers and collaborators. The site uses React and TailwindCSS to create a modern, clean look inspired by Anthropic and Google Gemini designs.
+
+## Core Goals
+1. Show Abdulmalik's AI/ML projects clearly
+2. Display his work experience at top companies
+3. Present his education at IMSIU and Stanford
+4. Create a professional online presence
+5. Share his thoughts on AI through blog posts
+
+## Key Features
+- Built with React + TailwindCSS
+- Dark/Light mode switch
+- Arabic/English language options
+- Works well on all devices
+- Easy to use for everyone
+- Links to GitHub and LinkedIn
+- Parts that can be easily updated
+
+## Technical Requirements
+- Framework: React
+- Styling: TailwindCSS
+- Hosting: GitHub Pages
+- Content: Markdown + MDX
+- Structure:
+  - /components (reusable parts)
+  - /pages (main website pages)
+  - /styles (design rules)
+  - /data (content storage)
+  - /posts (blog entries)
+
+## Content Sections
+1. About Page
+   - Personal introduction
+   - Skills and interests
+   - Contact information
+
+2. Experience Page
+   - Machine Learning Engineer @ Stealth
+   - R&D Engineer @ Wae وَعِي
+   - AI Intern @ Microsoft
+
+3. Education Page
+   - Stanford University (CS234)
+   - IMSIU (B.Sc. Information Systems)
+
+4. Projects Page
+   - Farqad (Financial chatbot)
+   - PerceiveAI (Sign language system)
+   - Muragib (NLP platform)
+   - AqarSphere (Housing predictions)
+   - STC Recommender (Content suggestions)
+
+5. Blog Section
+   - AI/ML articles
+   - Tutorials
+   - Industry insights
+
+## Design Guidelines
+- Clean, minimal layout
+- Professional appearance
+- Easy to read text
+- Clear navigation
+- Fast loading pages
+- Mobile-friendly design
+
+## Success Metrics
+1. Website loads quickly
+2. Easy to find important information
+3. Works well on all devices
+4. Clearly shows Abdulmalik's skills
+5. Professional appearance
+6. Easy to update with new content
+
+## Current Status
+The website is being built now. We regularly add new information about Abdulmalik's latest work and learning.

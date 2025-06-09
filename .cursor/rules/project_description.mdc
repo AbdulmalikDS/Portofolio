@@ -1,0 +1,105 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Overview
+
+This is the official portfolio website of **Abdulmalik Alquwayfili** — a passionate Senior Information Systems student at IMSIU, currently specializing in NLP and AI technologies. The portfolio is designed to highlight Abdulmalik’s hands-on experience, academic foundation, and contributions in the fields of machine learning, LLMs, MLOps, and Agentic AI.
+
+The site is built with **React + TailwindCSS**, deployed via **GitHub Pages**, and styled with a blend of **Anthropic’s minimal aesthetic** and **Google Gemini’s futuristic gradients** for a modern, clean user experience.
+
+---
+
+# 🎯 Purpose
+
+To publicly showcase:
+- A growing body of **AI/ML projects**
+- Real-world **industry experience** at top-tier companies
+- Academic background from **IMSIU** and **Stanford**
+- A clean personal brand that’s accessible to recruiters, collaborators, and the tech community
+- Thoughtful blog content on NLP, data science, and emerging AI technologies
+
+---
+
+# 💼 Experience
+
+### 🧠 Machine Learning Engineer @ Stealth (Mar 2025 – May 2025)  
+- Trained and fine-tuned 10+ open-source BERT-based models (e.g., CAMeL BERT, AraBERT) achieving 90%+ accuracy with <60ms latency.  
+- Built and deployed NLP pipelines for real-time sentiment analysis, sarcasm detection, and dialect classification.  
+- Delivered scalable analytics solutions extracting insights from unstructured Arabic text.
+
+### 🧪 Research and Development Engineer @ Wae وَعِي (Nov 2024 – Mar 2025)  
+- Developed and deployed AI tools used by over 150 employees and 50+ students in hands-on workshops.  
+- Created technical content bridging AI theory and practical implementation.  
+- Evaluated the latest AI tools to foster innovation in educational environments.
+
+### 🤖 AI Intern @ Microsoft (Jul 2024)  
+- Built a computer vision classifier using Azure Custom Vision.  
+- Preprocessed and engineered data for predictive analytics.  
+- Deployed an AI model on Azure ML for intelligent service platforms.
+
+---
+
+# 🎓 Education
+
+- **Stanford University – CS234: Reinforcement Learning (Feb 2025 – Jul 2025)**  
+  Focus: Deep RL, Monte Carlo modeling, policy gradients, value iteration
+
+- **Imam Muhammad ibn Saud Islamic University – B.Sc. Information Systems (Sep 2021 – Jul 2025)**  
+  GPA: Excellence  
+  Relevant Courses: Data Mining, System Design, OOP, Operating Systems, Networks
+
+---
+
+# 💡 Projects
+
+This portfolio includes detailed showcases of real-world projects such as:
+- **Farqad** – A bilingual financial RAG chatbot built using ALLaM, LangChain, Qdrant, and FastAPI
+- **PerceiveAI** – Real-time AI system translating live sports commentary to sign language via animated avatars
+- **Muragib** – Scalable NLP analytics platform built with optimized Arabic LLMs
+- **AqarSphere** – GPU-accelerated housing price prediction engine using XGBoost
+- **STC Recommender** – Personalized recommendation system for Jawwy TV content
+
+Each project includes:
+- Stack: (e.g., LangChain, Ollama, MongoDB, Qdrant, Transformers, etc.)
+- GitHub repository link
+- Brief outcome or impact statement
+
+---
+
+# 📝 Blog
+
+A space to publish:
+- Articles, case studies, and tutorials related to LLMs, NLP, MLOps, and AI research
+- Personal reflections on the AI industry and Abdulmalik’s academic/learning journey
+
+---
+
+# 🌐 Site Features
+
+- ⚡ Built with React + TailwindCSS
+- 🌙 Dark/Light mode toggle
+- 🌍 Arabic/English language switcher
+- 📱 Fully responsive
+- ♿ Accessible and semantic HTML
+- 🔗 GitHub + LinkedIn integration
+- 🧩 Modular components for scalability
+
+---
+
+# 🚀 Deployment
+
+- **Platform**: GitHub Pages  
+- **Structure**: `/components`, `/pages`, `/styles`, `/data`, `/posts`
+- **Content Format**: Markdown + MDX
+
+---
+
+# ✅ Status
+
+The site is currently under active development. All components are being continuously updated to reflect Abdulmalik’s most recent work, certifications, and learnings.
+
+---
+
+Let me know if you'd like this broken into page-specific `mdc` files (e.g., `about.mdc`, `projects.mdc`), or want to generate the structure programmatically inside Cursor.

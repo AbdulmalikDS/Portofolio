@@ -1,0 +1,135 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Product Context and User Experience
+
+## Target Audience
+### Primary Users
+- **Recruiters and HR professionals**: Looking for AI/ML talent
+- **Potential employers**: Tech companies seeking experienced developers
+- **Collaborators**: Other developers and researchers in AI field
+- **Academic contacts**: Professors and students interested in research
+
+### Secondary Users
+- **Fellow students**: Learning from project examples
+- **Industry professionals**: Following blog content and insights
+- **General public**: Interested in AI/ML topics
+
+## User Goals and Needs
+### What Users Want to Find
+1. **Professional experience**: Clear work history and achievements
+2. **Technical skills**: Specific technologies and expertise levels
+3. **Project examples**: Real work samples with outcomes
+4. **Contact information**: How to reach Abdulmalik
+5. **Recent activity**: Blog posts and current learning
+
+### How Users Navigate
+- **Quick scan**: Users spend 10-30 seconds on initial visit
+- **Mobile-first**: Many users browse on phones
+- **Social sharing**: Content shared on LinkedIn and Twitter
+- **Direct links**: People often land on specific project pages
+
+## Key User Journeys
+### Journey 1: Recruiter Discovery
+1. **Entry**: Google search or LinkedIn referral
+2. **Landing**: Home page with clear value proposition
+3. **Exploration**: Experience and projects sections
+4. **Action**: Download resume or contact via email/LinkedIn
+
+### Journey 2: Technical Collaboration
+1. **Entry**: GitHub or technical blog post
+2. **Landing**: Specific project page
+3. **Exploration**: Technical details and code examples
+4. **Action**: Star GitHub repos or reach out via social media
+
+### Journey 3: Learning and Inspiration
+1. **Entry**: Blog post or social media
+2. **Landing**: Blog section
+3. **Exploration**: Related posts and project examples
+4. **Action**: Subscribe to updates or follow on social media
+
+## User Experience Principles
+### Accessibility First
+- **Screen reader friendly**: Proper heading structure
+- **Keyboard navigation**: All interactive elements accessible
+- **Color contrast**: WCAG AA compliance
+- **Text scaling**: Works at 200% zoom level
+
+### Performance Focus
+- **Fast loading**: Under 3 seconds on 3G connection
+- **Smooth scrolling**: No jank or layout shifts
+- **Responsive**: Works well on all screen sizes
+- **Offline friendly**: Basic content works without internet
+
+### Content Strategy
+- **Scannable**: Use headings, bullets, and short paragraphs
+- **Actionable**: Clear next steps for interested users
+- **Fresh**: Regular updates to blog and project sections
+- **Personal**: Show personality while maintaining professionalism
+
+## Language and Localization
+### Bilingual Support
+- **Arabic (RTL)**: Native language support
+- **English (LTR)**: International audience
+- **Easy switching**: Toggle between languages
+- **Consistent content**: Same information in both languages
+
+### Cultural Considerations
+- **Professional tone**: Appropriate for business context
+- **Cultural sensitivity**: Respectful of both Arabic and Western cultures
+- **Local context**: References to Saudi and Middle East tech scene
+
+## Content Hierarchy
+### Information Priority
+1. **Contact info**: Easy to find on every page
+2. **Current role**: What Abdulmalik does now
+3. **Key projects**: Most impressive work examples
+4. **Technical skills**: Specific technologies and tools
+5. **Education**: Academic background and certifications
+
+### Page Structure
+- **Above the fold**: Most important info visible immediately  
+- **Progressive disclosure**: More details available on scroll
+- **Clear navigation**: Always know where you are
+- **Consistent layout**: Similar structure across pages
+
+## Success Metrics
+### Engagement Metrics
+- **Time on site**: Average 2-3 minutes
+- **Pages per session**: 3-4 pages typical
+- **Bounce rate**: Under 60% for direct traffic
+- **Return visitors**: 20-30% return rate
+
+### Conversion Metrics
+- **Contact form submissions**: Primary success metric
+- **LinkedIn profile visits**: Secondary metric
+- **GitHub repository stars**: Technical engagement
+- **Blog post shares**: Content engagement
+
+## User Feedback Integration
+### Feedback Channels
+- **Contact form**: Direct feedback from visitors  
+- **Social media**: Comments and reactions
+- **Analytics**: User behavior patterns
+- **Professional network**: Direct feedback from contacts
+
+### Common User Requests
+1. **More project details**: Users want deeper technical explanations
+2. **Resume download**: Easy access to formatted resume
+3. **Blog subscriptions**: Way to get notified of new posts
+4. **Project demos**: Live examples or video walkthroughs
+
+## Competitive Analysis
+### Similar Portfolios
+- **Clean, minimal design**: Following industry trends
+- **Project-focused**: Emphasis on real work examples
+- **Technical depth**: Detailed explanations for technical audience
+- **Personal branding**: Consistent voice and personality
+
+### Differentiation
+- **Bilingual capability**: Unique in the Arabic tech space
+- **AI/ML specialization**: Focused expertise area
+- **Academic + industry**: Combination of research and practical experience
+- **Regular content**: Active blog with fresh insights

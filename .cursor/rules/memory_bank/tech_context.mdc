@@ -1,0 +1,103 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Technical Context and Environment
+
+## Core Technologies
+- **React**: 18.x (Latest stable)
+- **TailwindCSS**: 3.x for styling
+- **TypeScript**: For type safety (optional but recommended)
+- **Vite**: Build tool and dev server
+- **React Router**: 6.x for routing
+
+## Development Dependencies
+```json
+{
+  "react": "^18.0.0",
+  "react-dom": "^18.0.0",
+  "react-router-dom": "^6.0.0",
+  "tailwindcss": "^3.0.0",
+  "vite": "^4.0.0",
+  "@vitejs/plugin-react": "^4.0.0"
+}
+```
+
+## Content Processing
+- **MDX**: For blog posts and content
+- **Gray-matter**: For frontmatter parsing
+- **Remark/Rehype**: For Markdown processing
+- **Prism.js**: For code syntax highlighting
+
+## Additional Libraries
+- **Framer Motion**: For animations (optional)
+- **React Icons**: For consistent icon usage
+- **Date-fns**: For date formatting
+- **Clsx**: For conditional CSS classes
+
+## Build and Deployment
+### Development Environment
+- **Node.js**: 18.x or higher
+- **npm**: 9.x or yarn for package management
+- **VS Code**: Recommended editor with extensions:
+  - ES7+ React/Redux/React-Native snippets
+  - Tailwind CSS IntelliSense
+  - Prettier - Code formatter
+
+### Build Process
+1. `npm run dev` - Start development server
+2. `npm run build` - Create production build
+3. `npm run preview` - Preview production build locally
+
+### Deployment Workflow
+- **GitHub Pages**: Static site hosting
+- **GitHub Actions**: Automated deployment
+- **Custom domain**: Optional (can be added later)
+
+## Performance Requirements
+- **First Contentful Paint**: < 1.5 seconds
+- **Largest Contentful Paint**: < 2.5 seconds
+- **Cumulative Layout Shift**: < 0.1
+- **Time to Interactive**: < 3 seconds
+
+## Browser Support
+- **Modern browsers**: Chrome 90+, Firefox 90+, Safari 14+
+- **Mobile browsers**: iOS Safari 14+, Chrome Mobile 90+
+- **No IE support**: Focus on modern web standards
+
+## Security Considerations
+- **HTTPS only**: GitHub Pages provides SSL
+- **No sensitive data**: All content is public
+- **XSS protection**: Sanitize any dynamic content
+- **CSP headers**: Content Security Policy for additional protection
+
+## SEO Requirements
+- **Meta tags**: Title, description, keywords for each page
+- **Open Graph**: Social media sharing optimization
+- **Structured data**: JSON-LD for rich snippets
+- **Sitemap**: XML sitemap for search engines
+- **Robots.txt**: Search engine crawling instructions
+
+## Analytics and Monitoring
+- **Google Analytics**: Track visitor behavior (optional)
+- **Console logging**: Error tracking in development
+- **Performance monitoring**: Web Vitals tracking
+
+## File Size Constraints
+- **JavaScript bundle**: < 200KB gzipped
+- **CSS bundle**: < 50KB gzipped
+- **Images**: Optimized for web (WebP format preferred)
+- **Total page size**: < 1MB for initial load
+
+## Known Technical Limitations
+1. **GitHub Pages**: Static hosting only (no server-side rendering)
+2. **Client-side routing**: Requires 404.html workaround
+3. **Build time**: Static generation for all content
+4. **CDN**: Limited caching control on GitHub Pages
+
+## Development Workflow
+1. **Feature branches**: Create branch for each feature
+2. **Pull requests**: Code review before merging
+3. **Automated deployment**: Deploy on push to main branch
+4. **Local testing**: Test all features locally before deployment
