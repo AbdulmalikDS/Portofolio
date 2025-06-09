@@ -13,12 +13,12 @@ export const InteractiveSkills = () => {
       categories: {
         programming: {
           name: 'Programming Languages',
-          color: '#e5e7eb',
+          color: '#9ca3af',
           skills: ['Python', 'Java', 'JavaScript', 'C++', 'SQL', 'Git', 'CUDA', 'R', 'Rust', 'PHP']
         },
         libraries: {
           name: 'Libraries & Frameworks',
-          color: '#d1d5db',
+          color: '#9ca3af',
           skills: ['Transformers', 'TensorFlow', 'PyTorch', 'Keras', 'Scikit-learn', 'NLTK', 'OpenCV', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'FastAPI', 'OpenAI','Ollama', 'Pydantic', 'LangChain', 'BERT', 'APIs', 'JSON', 'wandb']
         },
         databases: {
@@ -28,12 +28,12 @@ export const InteractiveSkills = () => {
         },
         devops: {
           name: 'DevOps & Environments',
-          color: '#6b7280',
+          color: '#9ca3af',
           skills: ['Linux', 'Ubuntu', 'Docker', 'Conda', 'Notebooks', 'Colab', 'Postman', 'cURL']
         },
         concepts: {
           name: 'Research Interests',
-          color: '#4b5563',
+          color: '#9ca3af',
           skills: ['AGI', 'Agentic AI', 'MCPs', 'CNNs', 'RNNs', 'Attention', 'RLHF', 'PPO', 'DQN', 'Policy Gradients', 'LLMOps', 'MLOps', 'GenAI', 'Quantum Computing']
         }
       }
