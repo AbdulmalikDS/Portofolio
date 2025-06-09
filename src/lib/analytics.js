@@ -3,7 +3,7 @@ export const GA_TRACKING_ID = import.meta.env.VITE_GA_TRACKING_ID || 'G-4TXTKW7Y
 
 // Dynamically load Google Analytics script
 const loadGoogleAnalytics = () => {
-  if (typeof window !== 'undefined' && GA_TRACKING_ID && GA_TRACKING_ID !== 'G-4TXTKW7YQW') {
+  if (typeof window !== 'undefined' && GA_TRACKING_ID && GA_TRACKING_ID.startsWith('G-')) {
     // Load the gtag script
     const script = document.createElement('script')
     script.async = true
@@ -21,7 +21,7 @@ const loadGoogleAnalytics = () => {
 
 // Initialize Google Analytics
 export const initGA = () => {
-  if (typeof window !== 'undefined' && GA_TRACKING_ID && GA_TRACKING_ID !== 'G-4TXTKW7YQW') {
+  if (typeof window !== 'undefined' && GA_TRACKING_ID && GA_TRACKING_ID.startsWith('G-')) {
     // Load GA script first
     loadGoogleAnalytics()
     
@@ -35,7 +35,7 @@ export const initGA = () => {
 
 // Track page views
 export const trackPageView = (url, title) => {
-  if (typeof window !== 'undefined' && window.gtag && GA_TRACKING_ID !== 'G-4TXTKW7YQW') {
+  if (typeof window !== 'undefined' && window.gtag && GA_TRACKING_ID.startsWith('G-')) {
     window.gtag('config', GA_TRACKING_ID, {
       page_title: title,
       page_location: url,
@@ -45,7 +45,7 @@ export const trackPageView = (url, title) => {
 
 // Track custom events
 export const trackEvent = (action, category, label, value) => {
-  if (typeof window !== 'undefined' && window.gtag && GA_TRACKING_ID !== 'G-4TXTKW7YQW') {
+  if (typeof window !== 'undefined' && window.gtag && GA_TRACKING_ID.startsWith('G-')) {
     window.gtag('event', action, {
       event_category: category,
       event_label: label,
