@@ -13,27 +13,27 @@ export const InteractiveSkills = () => {
       categories: {
         programming: {
           name: 'Programming Languages',
-          color: '#3b82f6',
+          color: '#e5e7eb',
           skills: ['Python', 'Java', 'JavaScript', 'C++', 'SQL', 'Git', 'CUDA', 'R', 'Rust', 'PHP']
         },
         libraries: {
           name: 'Libraries & Frameworks',
-          color: '#10b981',
+          color: '#d1d5db',
           skills: ['Transformers', 'TensorFlow', 'PyTorch', 'Keras', 'Scikit-learn', 'NLTK', 'OpenCV', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'FastAPI', 'OpenAI','Ollama', 'Pydantic', 'LangChain', 'BERT', 'APIs', 'JSON', 'wandb']
         },
         databases: {
           name: 'Databases',
-          color: '#8b5cf6',
+          color: '#9ca3af',
           skills: ['PostgreSQL', 'MongoDB', 'Qdrant', 'ChromaDB', 'Supabase', 'DBeaver', 'sqlalchemy', 'alembic']
         },
         devops: {
           name: 'DevOps & Environments',
-          color: '#f97316',
+          color: '#6b7280',
           skills: ['Linux', 'Ubuntu', 'Docker', 'Conda', 'Notebooks', 'Colab', 'Postman', 'cURL']
         },
         concepts: {
           name: 'Research Interests',
-          color: '#ec4899',
+          color: '#4b5563',
           skills: ['AGI', 'Agentic AI', 'MCPs', 'CNNs', 'RNNs', 'Attention', 'RLHF', 'PPO', 'DQN', 'Policy Gradients', 'LLMOps', 'MLOps', 'GenAI', 'Quantum Computing']
         }
       }
@@ -74,7 +74,7 @@ export const InteractiveSkills = () => {
       // Draw subtle connecting lines between skill nodes
       const nodes = document.querySelectorAll('[data-skill-node]')
       if (nodes.length > 1) {
-        ctx.strokeStyle = 'rgba(251, 146, 60, 0.1)'
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'
         ctx.lineWidth = 1
         
         nodes.forEach((node, i) => {
@@ -108,8 +108,8 @@ export const InteractiveSkills = () => {
   }, [displaySkills, selectedCategory])
 
   return (
-    <div className="bg-neutral-800/70 backdrop-blur-sm rounded-lg p-6 font-mono transition-colors duration-300 border border-neutral-700/50">
-      <div className="text-orange-500 font-bold text-lg mb-6">
+    <div className="bg-gray-900/70 backdrop-blur-sm rounded-lg p-6 font-mono transition-colors duration-300 border border-gray-800/50">
+      <div className="text-white font-bold text-lg mb-6">
         {currentData.title}
       </div>
 
@@ -122,7 +122,7 @@ export const InteractiveSkills = () => {
             className={`px-4 py-2 text-sm rounded-md transition-all duration-200 ${
               selectedCategory === key
                 ? 'text-white'
-                : 'bg-neutral-700/50 text-neutral-300 hover:bg-neutral-600/50'
+                : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50'
             }`}
             style={{
               backgroundColor: selectedCategory === key ? category.color : undefined
@@ -183,7 +183,7 @@ export const InteractiveSkills = () => {
                   {/* Skill Name */}
                   <div
                     className={`text-sm font-medium transition-colors duration-300 ${
-                      hoveredSkill === item.skill ? 'text-white' : 'text-neutral-300'
+                      hoveredSkill === item.skill ? 'text-white' : 'text-gray-300'
                     }`}
                   >
                     {item.skill}

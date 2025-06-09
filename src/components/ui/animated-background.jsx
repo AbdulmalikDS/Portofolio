@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 
 export const AnimatedBackground = () => {
   const canvasRef = useRef(null)
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const particlesRef = useRef([])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
 
     const ctx = canvas.getContext('2d')
-    let animationFrameId
+    let animationId
 
+    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
@@ -20,31 +22,44 @@ export const AnimatedBackground = () => {
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      
-      // Draw grid pattern
-      const gridSize = 50
-      const fadeDistance = 250
-      
-      // Calculate grid opacity based on distance from mouse
-      ctx.strokeStyle = `rgba(251, 146, 60, 0.15)`
-      ctx.lineWidth = 0.5
+    // Mouse tracking
+    const handleMouseMove = (e) => {
+      mouseRef.current = {
+        x: e.clientX,
+        y: e.clientY
+      }
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+
+    // Initialize particles
+    const initParticles = () => {
+      particlesRef.current = []
+      for (let i = 0; i < 150; i++) {
+        particlesRef.current.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 2 + 1,
+          speedX: (Math.random() - 0.5) * 0.5,
+          speedY: (Math.random() - 0.5) * 0.5,
+          opacity: Math.random() * 0.5 + 0.1,
+          life: Math.random() * 100 + 50
+        })
+      }
+    }
+
+    initParticles()
+
+    // Draw atmospheric grid
+    const drawGrid = () => {
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)'
+      ctx.lineWidth = 1
+      ctx.setLineDash([5, 15])
+
+      const gridSize = 80
       
       // Vertical lines
-      for (let x = 0; x <= canvas.width; x += gridSize) {
-        const distanceFromMouse = Math.abs(x - mousePos.x)
-        let opacity = 0.15
-        let lineWidth = 0.5
-        
-        if (distanceFromMouse < fadeDistance) {
-          const factor = 1 - (distanceFromMouse / fadeDistance)
-          opacity = 0.15 + factor * 0.5 // Stronger interaction
-          lineWidth = 0.5 + factor * 1.5 // Dynamic line width
-        }
-        
-        ctx.strokeStyle = `rgba(251, 146, 60, ${opacity})`
-        ctx.lineWidth = lineWidth
+      for (let x = 0; x < canvas.width; x += gridSize) {
         ctx.beginPath()
         ctx.moveTo(x, 0)
         ctx.lineTo(x, canvas.height)
@@ -52,72 +67,115 @@ export const AnimatedBackground = () => {
       }
       
       // Horizontal lines
-      for (let y = 0; y <= canvas.height; y += gridSize) {
-        const distanceFromMouse = Math.abs(y - mousePos.y)
-        let opacity = 0.15
-        let lineWidth = 0.5
-        
-        if (distanceFromMouse < fadeDistance) {
-          const factor = 1 - (distanceFromMouse / fadeDistance)
-          opacity = 0.15 + factor * 0.5 // Stronger interaction
-          lineWidth = 0.5 + factor * 1.5 // Dynamic line width
-        }
-        
-        ctx.strokeStyle = `rgba(251, 146, 60, ${opacity})`
-        ctx.lineWidth = lineWidth
+      for (let y = 0; y < canvas.height; y += gridSize) {
         ctx.beginPath()
         ctx.moveTo(0, y)
         ctx.lineTo(canvas.width, y)
         ctx.stroke()
       }
+      
+      ctx.setLineDash([])
+    }
 
-      // Add some floating particles for extra effect
-      const time = Date.now() * 0.001
-      for (let i = 0; i < 5; i++) {
-        const x = (Math.sin(time + i) * 200) + canvas.width / 2
-        const y = (Math.cos(time + i * 0.5) * 100) + canvas.height / 2
+    // Draw floating particles
+    const drawParticles = () => {
+      particlesRef.current.forEach((particle, index) => {
+        // Calculate distance from mouse
+        const dx = mouseRef.current.x - particle.x
+        const dy = mouseRef.current.y - particle.y
+        const distance = Math.sqrt(dx * dx + dy * dy)
         
-        const distanceFromMouse = Math.sqrt(
-          (x - mousePos.x) ** 2 + (y - mousePos.y) ** 2
-        )
-        
-        let size = 2
-        let opacity = 0.3
-        
-        if (distanceFromMouse < 100) {
-          const factor = 1 - (distanceFromMouse / 100)
-          size += factor * 3
-          opacity += factor * 0.4
+        // Mouse influence
+        if (distance < 150) {
+          const force = (150 - distance) / 150
+          particle.x -= dx * force * 0.02
+          particle.y -= dy * force * 0.02
+          particle.opacity = Math.min(particle.opacity + force * 0.3, 1)
+        } else {
+          particle.opacity = Math.max(particle.opacity - 0.01, 0.1)
         }
-        
+
+        // Update position
+        particle.x += particle.speedX
+        particle.y += particle.speedY
+
+        // Boundary wrapping
+        if (particle.x < 0) particle.x = canvas.width
+        if (particle.x > canvas.width) particle.x = 0
+        if (particle.y < 0) particle.y = canvas.height
+        if (particle.y > canvas.height) particle.y = 0
+
+        // Draw particle
+        ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`
         ctx.beginPath()
-        ctx.arc(x, y, size, 0, 2 * Math.PI)
-        ctx.fillStyle = `rgba(251, 146, 60, ${opacity})`
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2)
         ctx.fill()
-      }
 
-      animationFrameId = requestAnimationFrame(animate)
+        // Draw connections to nearby particles
+        particlesRef.current.slice(index + 1).forEach(otherParticle => {
+          const dx2 = particle.x - otherParticle.x
+          const dy2 = particle.y - otherParticle.y
+          const distance2 = Math.sqrt(dx2 * dx2 + dy2 * dy2)
+
+          if (distance2 < 100) {
+            const opacity = (100 - distance2) / 100 * 0.2
+            ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`
+            ctx.lineWidth = 0.5
+            ctx.beginPath()
+            ctx.moveTo(particle.x, particle.y)
+            ctx.lineTo(otherParticle.x, otherParticle.y)
+            ctx.stroke()
+          }
+        })
+      })
     }
 
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY })
+    // Draw cursor glow effect
+    const drawCursorGlow = () => {
+      const gradient = ctx.createRadialGradient(
+        mouseRef.current.x, mouseRef.current.y, 0,
+        mouseRef.current.x, mouseRef.current.y, 200
+      )
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)')
+      gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.05)')
+      gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
+
+      ctx.fillStyle = gradient
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
+    // Animation loop
+    const animate = () => {
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      // Draw elements
+      drawGrid()
+      drawParticles()
+      drawCursorGlow()
+
+      animationId = requestAnimationFrame(animate)
+    }
+
     animate()
 
+    // Cleanup
     return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId)
+      }
       window.removeEventListener('resize', resizeCanvas)
       window.removeEventListener('mousemove', handleMouseMove)
-      cancelAnimationFrame(animationFrameId)
     }
-  }, [mousePos])
+  }, [])
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none opacity-60"
-      style={{ zIndex: 1 }}
+      className="fixed inset-0 pointer-events-none z-0"
+      style={{ 
+        background: 'radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%)'
+      }}
     />
   )
 }
@@ -185,107 +243,74 @@ export const HorizontalTimeline = ({ experiences }) => {
 
   const getColorForExperience = (exp) => {
     const colors = {
-      'accent': '#f97316', // orange-500
-      'primary': '#3b82f6', // blue-500  
-      'secondary': '#10b981', // emerald-500
-      'purple': '#8b5cf6', // violet-500
-      'dark': '#1f2937' // gray-800 (dark/black)
+      'Machine Learning Engineer': '#0080ff', // Electric blue
+      'Research and Development Engineer': '#0066cc', // Rich blue
+      'AI Intern': '#60a5fa', // Medium light blue
+      'Student': '#93c5fd', // Soft blue
+      'default': '#737373' // Gray for other experiences
     }
-    return colors[exp.color] || colors.purple
+    return colors[exp.color] || colors.default
   }
 
   return (
-    <div className="mb-8">
-      <div className="bg-neutral-900/80 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-6 font-mono">
-        <div className="text-orange-400 font-bold text-lg mb-6">
-          .timeline()
-        </div>
+    <div className="bg-gray-900 text-white py-16">
+      <div className="max-w-6xl mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-accent bg-clip-text text-transparent">
+          Experience Timeline
+        </h2>
         
-        {/* Year markers */}
-        <div className="flex justify-between items-center mb-4 px-2">
-          <div className="text-neutral-400 text-sm font-bold">2024</div>
-          <div className="text-neutral-400 text-sm font-bold">2025</div>
-        </div>
-        
-        {/* Main timeline bar */}
-        <div className="relative h-20 bg-gradient-to-r from-neutral-800 via-neutral-750 to-neutral-800 rounded-lg border border-neutral-700 overflow-hidden">
-          {/* Background pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="w-full h-full" style={{
-              backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f97316' fill-opacity='0.1'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3C/g%3E%3C/svg%3E\")",
-              backgroundRepeat: "repeat"
-            }}></div>
-          </div>
+        <div className="relative">
+          {/* Timeline line */}
+          <div className="absolute top-8 left-0 right-0 h-0.5 bg-gray-800"></div>
           
-          {/* Year divider */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-orange-400 to-transparent opacity-60"></div>
-          
-          {/* Month markers */}
-          <div className="absolute inset-0 flex">
-            {Array.from({ length: 25 }, (_, i) => (
-              <div key={i} className="flex-1 border-r border-neutral-700/30 last:border-r-0">
-                {i % 6 === 0 && (
-                  <div className="w-full h-full bg-neutral-700/20"></div>
-                )}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {experiences.map((exp, index) => (
+              <div key={index} className="relative">
+                {/* Timeline dot */}
+                <div className="absolute top-6 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-accent-500 rounded-full border-4 border-gray-900 z-10"></div>
+                
+                {/* Content card */}
+                <div className="mt-16 bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 border border-gray-700 hover:border-accent-500/50 transition-all duration-300">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-white mb-2">{exp.title}</h3>
+                    <p className="text-accent-400 font-medium mb-1">{exp.company}</p>
+                    <p className="text-gray-400 text-sm mb-3">{exp.period}</p>
+                    
+                    {exp.status === 'current' && (
+                      <div className="inline-flex items-center px-3 py-1 bg-accent-500/20 text-accent-400 rounded-full text-xs font-medium border border-accent-500/30">
+                        <div className="w-2 h-2 bg-accent-500 rounded-full mr-2 animate-accent-pulse"></div>
+                        Current
+                      </div>
+                    )}
+                    
+                    {exp.achievements && (
+                      <div className="mt-4 space-y-2">
+                        {exp.achievements.map((achievement, i) => (
+                          <div key={i} className="text-gray-300 text-sm flex items-start">
+                            <span className="text-accent-400 mr-2">•</span>
+                            <span>{achievement}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {exp.skills && (
+                      <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                        {exp.skills.map((skill, i) => (
+                          <span
+                            key={i}
+                            className="px-2 py-1 bg-accent-500/10 text-accent-400 rounded text-xs border border-accent-500/20 hover:bg-accent-500/20 transition-colors duration-200"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-          
-          {/* Experience bars with enhanced styling */}
-          {experiences.map((exp, index) => {
-            const barData = getExperienceBarData(exp)
-            return (
-              <motion.div
-                key={exp.id}
-                initial={{ scaleX: 0, opacity: 0 }}
-                whileInView={{ scaleX: 1, opacity: 1 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="absolute rounded-lg shadow-lg border border-white/30 overflow-hidden backdrop-blur-sm"
-                style={{
-                  left: `${barData.left}%`,
-                  width: `${barData.width}%`,
-                  top: `${6 + index * 14}px`,
-                  height: '10px',
-                  backgroundColor: getColorForExperience(exp),
-                  boxShadow: `0 0 8px ${getColorForExperience(exp)}40`
-                }}
-                title={`${exp.title} at ${exp.company}`}
-              >
-                {/* Inner glow effect */}
-                <div 
-                  className="absolute inset-0 opacity-60"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${getColorForExperience(exp)}40, transparent)`
-                  }}
-                ></div>
-                
-                {/* Animated pulse for current jobs */}
-                {exp.status === 'current' && (
-                  <div 
-                    className="absolute right-0 top-0 bottom-0 w-1 animate-pulse"
-                    style={{ backgroundColor: getColorForExperience(exp) }}
-                  ></div>
-                )}
-              </motion.div>
-            )
-          })}
-        </div>
-        
-        {/* Legend with improved styling */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-6 pt-4 border-t border-neutral-700/50">
-          {experiences.map(exp => (
-            <div key={exp.id} className="flex items-center space-x-2 p-2 rounded bg-neutral-800/50 hover:bg-neutral-700/50 transition-colors duration-200">
-              <div 
-                className="w-3 h-3 rounded border border-white/20 shadow-sm"
-                style={{ 
-                  backgroundColor: getColorForExperience(exp),
-                  boxShadow: `0 0 4px ${getColorForExperience(exp)}60`
-                }}
-              ></div>
-              <span className="text-neutral-300 text-xs font-medium">{exp.company}</span>
-            </div>
-          ))}
         </div>
       </div>
     </div>
@@ -300,7 +325,7 @@ export const AnimatedTimeline = ({ experiences }) => {
       
       <div className="relative">
       {/* Timeline line */}
-      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-orange-400 via-orange-500 to-orange-600"></div>
+      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-400 via-purple-500 to-purple-600"></div>
       
       {experiences.map((exp, index) => (
         <motion.div
@@ -312,44 +337,44 @@ export const AnimatedTimeline = ({ experiences }) => {
           className="relative flex items-start mb-8 last:mb-0"
         >
           {/* Timeline dot */}
-          <div className="absolute left-6 w-4 h-4 bg-orange-500 rounded-full border-2 border-neutral-900 z-10">
+          <div className="absolute left-6 w-4 h-4 bg-purple-500 rounded-full border-2 border-black z-10">
             {exp.status === 'current' && (
-              <div className="absolute inset-1 bg-orange-400 rounded-full animate-pulse"></div>
+              <div className="absolute inset-1 bg-purple-400 rounded-full animate-purple-pulse"></div>
             )}
           </div>
           
           {/* Timeline content */}
-          <div className="ml-16 bg-neutral-800/50 backdrop-blur-sm border border-neutral-700/50 rounded-lg p-6 hover:border-orange-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10">
+          <div className="ml-16 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg p-6 hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Main content - takes up 2 columns on large screens */}
               <div className="lg:col-span-2">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-                  <h3 className="text-xl font-bold text-neutral-100 leading-tight">{exp.title}</h3>
+                  <h3 className="text-xl font-bold text-white leading-tight">{exp.title}</h3>
                   {exp.status === 'current' && (
-                    <span className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-full text-xs font-medium shadow-lg">
-                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-2 animate-pulse"></div>
+                    <span className="inline-flex items-center px-3 py-1.5 bg-gradient-purple text-white rounded-full text-xs font-medium shadow-lg">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-2 animate-purple-pulse"></div>
                       Current
                     </span>
                   )}
                 </div>
                 
                 <div className="space-y-2 mb-4">
-                  <div className="flex flex-wrap items-center gap-2 text-neutral-300">
-                    <span className="font-medium text-orange-300">{exp.fullCompanyName || exp.company}</span>
-                    <span className="text-neutral-500">•</span>
-                    <span className="text-neutral-400 text-sm">{exp.type}</span>
-                    <span className="text-neutral-500">•</span>
-                    <span className="text-neutral-400 text-sm">{exp.location}</span>
+                  <div className="flex flex-wrap items-center gap-2 text-gray-300">
+                    <span className="font-medium text-purple-300">{exp.fullCompanyName || exp.company}</span>
+                    <span className="text-gray-500">•</span>
+                    <span className="text-gray-400 text-sm">{exp.type}</span>
+                    <span className="text-gray-500">•</span>
+                    <span className="text-gray-400 text-sm">{exp.location}</span>
                   </div>
                   
-                  <div className="flex flex-wrap items-center gap-2 text-neutral-400 text-sm">
+                  <div className="flex flex-wrap items-center gap-2 text-gray-400 text-sm">
                     <span>{exp.period}</span>
-                    <span className="text-neutral-500">•</span>
-                    <span className="text-neutral-300">{exp.duration}</span>
+                    <span className="text-gray-500">•</span>
+                    <span className="text-gray-300">{exp.duration}</span>
                   </div>
                 </div>
                 
-                <p className="text-neutral-300 leading-relaxed mb-4">{exp.description}</p>
+                <p className="text-gray-300 leading-relaxed mb-4">{exp.description}</p>
                 
                 {/* Achievements section with consistent spacing and minimum height */}
                 <div className="mb-4 min-h-[2rem]">
@@ -357,8 +382,8 @@ export const AnimatedTimeline = ({ experiences }) => {
                     <ul className="space-y-2">
                       {exp.achievements.map((achievement, i) => (
                         <li key={i} className="flex items-start space-x-3">
-                          <span className="text-orange-400 mt-1.5 text-sm flex-shrink-0">▪</span>
-                          <span className="text-neutral-300 text-sm leading-relaxed">{achievement}</span>
+                          <span className="text-purple-400 mt-1.5 text-sm flex-shrink-0">▪</span>
+                          <span className="text-gray-300 text-sm leading-relaxed">{achievement}</span>
                         </li>
                       ))}
                     </ul>
@@ -370,14 +395,14 @@ export const AnimatedTimeline = ({ experiences }) => {
               
               {/* Skills section - takes up 1 column on large screens */}
               <div className="lg:col-span-1">
-                <h4 className="text-sm font-semibold text-neutral-400 uppercase tracking-wider mb-3">
+                <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
                   Skills & Technologies
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {exp.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-3 py-1.5 text-xs bg-neutral-700/60 text-neutral-300 rounded-md border border-neutral-600/50 backdrop-blur-sm hover:bg-orange-500/20 hover:border-orange-500/30 hover:text-orange-300 transition-all duration-200"
+                      className="px-3 py-1.5 text-xs bg-gray-700/60 text-gray-300 rounded-md border border-gray-600/50 backdrop-blur-sm hover:bg-purple-500/20 hover:border-purple-500/30 hover:text-purple-300 transition-all duration-200"
                     >
                       {skill}
                     </span>

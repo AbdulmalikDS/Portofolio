@@ -13,7 +13,46 @@ import { FaGithub, FaLinkedinIn } from 'react-icons/fa'
 
 
 const Portfolio = () => {
-  const [activeSection, setActiveSection] = useState('about')
+  // Custom Cursor Logic
+  useEffect(() => {
+    const cursor = document.createElement('div')
+    cursor.className = 'cursor'
+    document.body.appendChild(cursor)
+
+    const handleMouseMove = (e) => {
+      // Only DOM manipulation, no React state updates
+      cursor.style.left = e.clientX - 10 + 'px'
+      cursor.style.top = e.clientY - 10 + 'px'
+    }
+
+    const handleMouseEnter = () => {
+      cursor.classList.add('hover')
+    }
+
+    const handleMouseLeave = () => {
+      cursor.classList.remove('hover')
+    }
+
+    // Add hover effects to interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, [role="button"]')
+    interactiveElements.forEach(element => {
+      element.addEventListener('mouseenter', handleMouseEnter)
+      element.addEventListener('mouseleave', handleMouseLeave)
+    })
+
+    document.addEventListener('mousemove', handleMouseMove)
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+      interactiveElements.forEach(element => {
+        element.removeEventListener('mouseenter', handleMouseEnter)
+        element.removeEventListener('mouseleave', handleMouseLeave)
+      })
+      if (cursor.parentNode) {
+        cursor.parentNode.removeChild(cursor)
+      }
+    }
+  }, [])
 
   // Scroll to section function
   const scrollToSection = (sectionId) => {
@@ -23,36 +62,69 @@ const Portfolio = () => {
     }
   }
 
-  // Track active section on scroll with throttling - TEMPORARILY DISABLED
-  // useEffect(() => {
-  //   let ticking = false
+  // Track active section with pure DOM manipulation (no React re-renders)
+  useEffect(() => {
+    let ticking = false
+    let currentSection = 'about'
 
-  //   const handleScroll = () => {
-  //     if (!ticking) {
-  //       requestAnimationFrame(() => {
-  //         const sections = ['about', 'experience', 'projects', 'contact']
-  //         const scrollPosition = window.scrollY + 100
+    const updateNavigation = (activeSection) => {
+      // Direct DOM manipulation for navigation highlighting
+      const navButtons = document.querySelectorAll('[data-nav-section]')
+      navButtons.forEach(button => {
+        const section = button.getAttribute('data-nav-section')
+        if (section === activeSection) {
+          button.className = button.className.replace('text-gray-300 hover:text-white', 'text-white')
+        } else {
+          button.className = button.className.replace('text-white', 'text-gray-300 hover:text-white')
+        }
+      })
+    }
 
-  //         for (const section of sections) {
-  //           const element = document.getElementById(section)
-  //           if (element) {
-  //             const { offsetTop, offsetHeight } = element
-  //             if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-  //               // Only update if the section actually changed
-  //               setActiveSection(prev => prev !== section ? section : prev)
-  //               break
-  //             }
-  //           }
-  //         }
-  //         ticking = false
-  //       })
-  //       ticking = true
-  //     }
-  //   }
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const sections = ['about', 'experience', 'projects', 'contact']
+          const scrollPosition = window.scrollY + 100
 
-  //   window.addEventListener('scroll', handleScroll, { passive: true })
-  //   return () => window.removeEventListener('scroll', handleScroll)
-  // }, [])
+          for (const section of sections) {
+            const element = document.getElementById(section)
+            if (element) {
+              const { offsetTop, offsetHeight } = element
+              if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                // Only update if section actually changed
+                if (currentSection !== section) {
+                  currentSection = section
+                  updateNavigation(section)
+                }
+                break
+              }
+            }
+          }
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
+    // Throttle scroll events
+    let scrollTimeout
+    const throttledScroll = () => {
+      if (scrollTimeout) return
+      scrollTimeout = setTimeout(() => {
+        handleScroll()
+        scrollTimeout = null
+      }, 100)
+    }
+
+    // Initial navigation setup
+    updateNavigation('about')
+
+    window.addEventListener('scroll', throttledScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', throttledScroll)
+      if (scrollTimeout) clearTimeout(scrollTimeout)
+    }
+  }, [])
 
   const content = useMemo(() => ({
     en: {
@@ -213,16 +285,16 @@ const Portfolio = () => {
   const currentContent = content['en']
 
   const Navigation = () => (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900 border-b border-neutral-800">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b" style={{ backgroundColor: '#0a0a0a95', borderColor: '#2a2a2a' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-4">
           {/* Left side - Status and social */}
           <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2 text-xs text-neutral-400">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span>Available for opportunities</span>
-              <span className="text-neutral-600">•</span>
-              <span>Riyadh, SA</span>
+            <div className="flex items-center space-x-2 text-xs">
+              <div className="w-2 h-2 rounded-full animate-pulse bg-green-400"></div>
+              <span className="text-gray-300 font-medium">Available for opportunities</span>
+              <span className="text-gray-500">•</span>
+              <span className="text-gray-300">Riyadh, SA</span>
             </div>
             
             {/* Social Links */}
@@ -231,7 +303,7 @@ const Portfolio = () => {
                 href="https://github.com/abdulmalikDs"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-orange-400 transition-colors duration-200"
+                className="transition-colors duration-200 text-gray-400 hover:text-white"
                 aria-label="GitHub"
               >
                 <FaGithub className="w-4 h-4" />
@@ -240,7 +312,7 @@ const Portfolio = () => {
                 href="https://www.linkedin.com/in/abdulmalik-alquwayfili-0405792a0/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-orange-400 transition-colors duration-200"
+                className="transition-colors duration-200 text-gray-400 hover:text-white"
                 aria-label="LinkedIn"
               >
                 <FaLinkedinIn className="w-4 h-4" />
@@ -255,7 +327,8 @@ const Portfolio = () => {
                 <button
                   key={key}
                   onClick={() => scrollToSection(key)}
-                  className="text-sm font-medium transition-colors duration-200 hover:text-orange-400 text-neutral-300"
+                  data-nav-section={key}
+                  className="text-sm font-medium transition-colors duration-200 text-gray-300 hover:text-white"
                 >
                   {label}
                 </button>
@@ -265,7 +338,7 @@ const Portfolio = () => {
             {/* CTA Button */}
             <a
               href="mailto:af.alquwayfili@gmail.com"
-              className="inline-flex items-center px-4 py-2 bg-orange-500/10 border border-orange-500/30 text-orange-400 rounded-lg text-sm font-medium hover:bg-orange-500 hover:text-white transition-all duration-200"
+              className="inline-flex items-center px-4 py-2 border rounded-lg text-sm font-medium transition-all duration-200 bg-gray-800 border-gray-600 text-gray-300 hover:bg-white hover:text-black hover:border-white"
             >
               <HiMail className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">Let's Talk</span>
@@ -278,7 +351,7 @@ const Portfolio = () => {
   )
 
   const AboutSection = () => (
-    <section id="about" className="min-h-screen text-neutral-100 flex items-center pt-20">
+    <section id="about" className="min-h-screen text-white flex items-center pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl">
           <motion.div
@@ -287,56 +360,58 @@ const Portfolio = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="mb-8">
-              <span className="text-orange-400 text-lg font-medium">
+              <span className="text-gray-300 text-lg font-medium">
                 {currentContent.about.greeting}
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-light mb-8 tracking-tight">
+            <h1 className="text-5xl md:text-7xl font-light mb-8 tracking-tight text-white">
               {currentContent.about.name}
             </h1>
             
-            <p className="text-xl text-neutral-400 mb-12 font-light">
+            <p className="text-xl text-gray-100 mb-12 font-light">
               {currentContent.about.title}
             </p>
             
-            <div className="text-2xl md:text-3xl font-light text-orange-400 mb-8 tracking-wide">
-              Builder. Voyager. Problem-solver.
+            <div className="text-2xl md:text-3xl font-bold text-gray-200 mb-8 tracking-wide">
+              <span className="bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent font-extrabold">
+                Builder. Voyager. Problem-solver.
+              </span>
             </div>
-            
+
             <div className="max-w-3xl">
               
               <div className="space-y-2 mb-8">
-                <p className="text-neutral-400">
+                <p className="text-gray-100">
                   {currentContent.about.currentRole}
                 </p>
-                <p className="text-neutral-400">
+                <p className="text-gray-100">
                   {currentContent.about.education}
                 </p>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <a
-                  href="mailto:af.alquwayfili@gmail.com"
-                  className="inline-flex items-center px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg transition-colors duration-200"
-                >
-                  <HiMail className="w-5 h-5 mr-2" />
-                  {currentContent.about.cta.contact}
-                </a>
-                
-                <a
-                  href="/Portofolio/resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 border border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white rounded-lg transition-colors duration-200"
-                >
-                  <HiDownload className="w-5 h-5 mr-2" />
-                  {currentContent.about.cta.resume}
-                </a>
+                                  <a
+                    href="mailto:af.alquwayfili@gmail.com"
+                    className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-white hover:text-black text-white rounded-lg transition-all duration-200 shadow-lg"
+                  >
+                    <HiMail className="w-5 h-5 mr-2" />
+                    {currentContent.about.cta.contact}
+                  </a>
+                  
+                  <a
+                    href="/Portofolio/resume.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-6 py-3 border border-gray-500 text-gray-200 hover:bg-white hover:text-black rounded-lg transition-all duration-200"
+                  >
+                    <HiDownload className="w-5 h-5 mr-2" />
+                    {currentContent.about.cta.resume}
+                  </a>
               </div>
 
               {/* Interactive Skills Section */}
-              <div className="pt-8 border-t border-neutral-800/50">
+              <div className="pt-8">
                 <InteractiveSkills />
               </div>
             </div>
@@ -355,15 +430,210 @@ const Portfolio = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 mb-12">
-            {currentContent.experience.title}
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white">
+            Experience
           </h2>
           
-          {/* Experience Timeline Container - Minimal design */}
-          <div className="space-y-8">
-            <AnimatedTimeline 
-              experiences={currentContent.experience.experiences} 
-            />
+          <div className="text-white text-lg mb-8 font-mono">
+            .timeline()
+          </div>
+          
+          {/* Compact Timeline */}
+          <div className="relative mb-12">
+            {/* Years */}
+            <div className="flex justify-between items-center mb-3 text-gray-400 font-mono text-xs">
+              <span>2024</span>
+              <span>2025</span>
+            </div>
+            
+            {/* Single Timeline Bar */}
+            <div className="relative bg-gray-800 rounded-full h-3 mb-4">
+              {/* Microsoft - Green */}
+              <motion.div
+                className="absolute h-full bg-green-500 rounded-full"
+                style={{ left: '15%', width: '8%' }}
+                initial={{ width: 0 }}
+                whileInView={{ width: '8%' }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              />
+              
+              {/* Wae - Blue */}
+              <motion.div
+                className="absolute h-full bg-blue-500 rounded-full"
+                style={{ left: '35%', width: '25%' }}
+                initial={{ width: 0 }}
+                whileInView={{ width: '25%' }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              />
+              
+              {/* Stealth - Gray */}
+              <motion.div
+                className="absolute h-full bg-gray-400 rounded-full"
+                style={{ left: '65%', width: '15%' }}
+                initial={{ width: 0 }}
+                whileInView={{ width: '15%' }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              />
+              
+              {/* Tahakom - Purple/Current */}
+              <motion.div
+                className="absolute h-full bg-purple-500 rounded-full"
+                style={{ left: '85%', width: '15%' }}
+                initial={{ width: 0 }}
+                whileInView={{ width: '15%' }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+              />
+            </div>
+            
+            {/* Legend */}
+            <div className="flex flex-wrap gap-6 text-xs justify-center">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-purple-500 rounded-full mr-2"></div>
+                <span className="text-gray-300">Tahakom</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-gray-400 rounded-full mr-2"></div>
+                <span className="text-gray-300">Stealth Startup</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                <span className="text-gray-300">Wae</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                <span className="text-gray-300">Microsoft</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Vertical Experience Timeline */}
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-gray-700"></div>
+            
+            {/* Experience Items */}
+            <div className="space-y-12">
+              {currentContent.experience.experiences.map((exp, index) => (
+                <motion.div
+                  key={exp.id}
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="relative pl-12 md:pl-20"
+                >
+                  {/* Timeline Dot */}
+                  <motion.div
+                    className={`absolute left-2 md:left-6 w-4 h-4 rounded-full border-4 shadow-lg ${
+                      exp.status === 'current' 
+                        ? 'bg-white border-gray-600' 
+                        : 'bg-gray-400 border-gray-600'
+                    }`}
+                    whileHover={{
+                      scale: 1.5,
+                      boxShadow: `0 0 20px ${exp.status === 'current' ? '#ffffff' : '#9ca3af'}60`
+                    }}
+                    animate={exp.status === 'current' ? {
+                      boxShadow: [
+                        '0 0 0 0 rgba(255, 255, 255, 0.7)',
+                        '0 0 0 10px rgba(255, 255, 255, 0)',
+                        '0 0 0 0 rgba(255, 255, 255, 0.7)'
+                      ]
+                    } : {}}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                  
+                  {/* Experience Card */}
+                  <motion.div
+                    className="bg-gray-900/50 border border-gray-700 rounded-lg p-6 shadow-lg transition-all duration-300 hover:border-gray-500 hover:bg-gray-900/80"
+                    whileHover={{
+                      boxShadow: '0 10px 30px rgba(255, 255, 255, 0.1)'
+                    }}
+                  >
+                    {/* Header */}
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                      <div className="mb-2 md:mb-0">
+                        <div className="flex items-center mb-2">
+                          {exp.status === 'current' && (
+                            <div className="w-2 h-2 bg-white rounded-full mr-3 animate-pulse"></div>
+                          )}
+                          <h3 className="text-xl font-bold text-white">
+                            {exp.title}
+                          </h3>
+                          {exp.status === 'current' && (
+                            <span className="ml-3 px-2 py-1 bg-white text-black text-xs font-medium rounded">
+                              Current
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-gray-300 font-medium">
+                          {exp.fullCompanyName || exp.company}
+                        </p>
+                        <div className="flex items-center text-sm mt-1 text-gray-400">
+                          <span>{exp.type}</span>
+                          <span className="mx-2">•</span>
+                          <span>{exp.location}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="text-right">
+                        <p className="text-gray-300 font-medium">{exp.period}</p>
+                        <p className="text-gray-500 text-sm">{exp.duration}</p>
+                      </div>
+                    </div>
+                    
+                    {/* Description */}
+                    <p className="mb-6 leading-relaxed text-gray-300">
+                      {exp.description}
+                    </p>
+                    
+                    {/* Achievements */}
+                    {exp.achievements && exp.achievements.length > 0 && (
+                      <div className="mb-6">
+                        <h4 className="text-white font-semibold mb-3 text-sm">
+                          Key Achievements:
+                        </h4>
+                        <ul className="space-y-2">
+                          {exp.achievements.map((achievement, achIndex) => (
+                            <motion.li
+                              key={achIndex}
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.3, delay: achIndex * 0.1 }}
+                              className="flex items-start text-sm text-gray-300"
+                            >
+                              <span className="mr-2 mt-1.5 flex-shrink-0 w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                              {achievement}
+                            </motion.li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    {/* Skills */}
+                    <div>
+                      <h4 className="text-white font-semibold mb-3 text-sm">
+                        SKILLS & TECHNOLOGIES
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {exp.skills.map((skill, skillIndex) => (
+                          <motion.span
+                            key={skill}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: skillIndex * 0.05 }}
+                            whileHover={{ scale: 1.05 }}
+                            className="px-3 py-1 text-xs rounded-full border transition-all duration-200 bg-gray-800 text-gray-200 border-gray-600 hover:bg-white hover:text-black hover:border-white"
+                          >
+                            {skill}
+                          </motion.span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
@@ -379,13 +649,13 @@ const Portfolio = () => {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {currentContent.projects.title}
           </h2>
-          <p className="text-neutral-400 mb-12">
+          <p className="text-gray-300 mb-12">
             {currentContent.projects.subtitle}
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {currentContent.projects.projects.map((project, index) => (
               <motion.div
@@ -394,62 +664,118 @@ const Portfolio = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true, margin: "-100px" }}
-                className="bg-neutral-800/30 rounded-lg p-8 hover:bg-neutral-800/50 transition-all duration-300 relative group"
+                whileHover={{ 
+                  scale: 1.02, 
+                  y: -5,
+                  boxShadow: "0 20px 50px rgba(135, 206, 235, 0.2)"
+                }}
+                whileTap={{ scale: 0.98 }}
+                className="border rounded-lg p-8 transition-all duration-300 relative group cursor-pointer"
+                style={{
+                  backgroundColor: '#1a1a1a80',
+                  borderColor: '#2a2a2a'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#87ceeb';
+                  e.currentTarget.style.backgroundColor = '#1a1a1a';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#2a2a2a';
+                  e.currentTarget.style.backgroundColor = '#1a1a1a80';
+                }}
               >
                 {project.featured && (
-                  <div className="absolute -top-2 -right-2">
-                    <div className="bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+                  <motion.div 
+                    className="absolute -top-2 -right-2"
+                    whileHover={{ rotate: 12, scale: 1.1 }}
+                  >
+                    <div className="text-xs px-3 py-1.5 bg-white text-black rounded-full shadow-lg font-medium">
                       Featured
                     </div>
-                  </div>
+                  </motion.div>
                 )}
                 
                 {project.status === 'in-progress' && (
-                  <div className="absolute -top-2 -right-2">
-                    <div className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full text-xs font-medium shadow-lg">
-                      <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
+                  <motion.div 
+                    className="absolute -top-2 -right-2"
+                    animate={{ 
+                      boxShadow: ["0 0 0 0 rgba(255, 255, 255, 0.7)", "0 0 0 10px rgba(255, 255, 255, 0)"] 
+                    }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <div className="inline-flex items-center px-3 py-1.5 bg-gray-800 text-white rounded-full text-xs font-medium shadow-lg">
+                      <motion.div 
+                        className="w-2 h-2 bg-white rounded-full mr-2"
+                        animate={{ opacity: [1, 0.3, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      />
                       <span className="font-semibold">Active Research</span>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
                 
                 <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-light text-neutral-100 mb-2 group-hover:text-orange-400 transition-colors duration-300">
+                  <motion.h3 
+                    className="text-xl font-light mb-2 transition-colors duration-300 text-white"
+                    whileHover={{ color: '#ffffff' }}
+                  >
                     {project.title}
-                  </h3>
+                  </motion.h3>
                   
                   <div className="flex gap-2">
                     {project.github && (
-                      <a
+                      <motion.a
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-neutral-500 hover:text-orange-400 transition-colors duration-300 opacity-0 group-hover:opacity-100"
+                        className="transition-colors duration-300 opacity-0 group-hover:opacity-100 text-gray-400"
+                        whileHover={{ 
+                          color: '#ffffff',
+                          scale: 1.2,
+                          rotate: 12 
+                        }}
+                        whileTap={{ scale: 0.9 }}
                       >
                         <HiExternalLink className="w-5 h-5" />
-                      </a>
+                      </motion.a>
                     )}
                   </div>
                 </div>
                 
-                <p className="text-neutral-400 text-sm mb-6 leading-relaxed">
+                <p className="text-sm mb-6 leading-relaxed text-gray-300">
                   {project.description}
                 </p>
                 
                 <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
+                  {project.tags.map((tag, index) => (
+                    <motion.span
                       key={tag}
-                      className="px-3 py-1 text-xs text-neutral-500 rounded-full border border-neutral-700"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                      whileHover={{ 
+                        scale: 1.05,
+                        backgroundColor: '#ffffff',
+                        color: '#000000'
+                      }}
+                      className="px-3 py-1 text-xs rounded-full border transition-all duration-200 cursor-pointer bg-gray-800 text-gray-200 border-gray-600 hover:border-white"
                     >
                       {tag}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
+
+                {/* Hover effect - soul essence particles */}
+                <motion.div
+                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{
+                    background: 'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.1) 0%, transparent 50%)'
+                  }}
+                />
               </motion.div>
             ))}
           </div>
-          
+
           {/* More Projects Section */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -458,18 +784,18 @@ const Portfolio = () => {
             viewport={{ once: true }}
             className="mt-12 text-center"
           >
-            <div className="bg-neutral-800/30 backdrop-blur-sm rounded-lg p-8 border border-neutral-700/50">
-              <h3 className="text-xl font-semibold text-neutral-100 mb-4">
+            <div className="bg-gray-900/30 backdrop-blur-sm rounded-lg p-8 border border-gray-700/50 hover:border-gray-600 transition-all duration-300">
+              <h3 className="text-xl font-semibold text-white mb-4">
                 More Projects
               </h3>
-              <p className="text-neutral-400 mb-6">
+              <p className="text-gray-300 mb-6">
                 Explore more of my work and open-source contributions on GitHub
               </p>
               <a
                 href="https://github.com/abdulmalikDs"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 bg-neutral-700/50 hover:bg-orange-500 text-neutral-300 hover:text-white rounded-lg transition-all duration-200 border border-neutral-600/50 hover:border-orange-500"
+                className="inline-flex items-center px-6 py-3 bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white rounded-lg transition-all duration-200 border border-gray-700/50 hover:border-gray-600"
               >
                 <FaGithub className="w-5 h-5 mr-2" />
                 View All Projects
@@ -492,17 +818,17 @@ const Portfolio = () => {
           viewport={{ once: true }}
           className="text-center max-w-4xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-neutral-100 mb-8">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">
             {currentContent.contact.title}
           </h2>
           
-          <p className="text-lg text-neutral-300 leading-relaxed mb-12 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-300 leading-relaxed mb-12 max-w-3xl mx-auto">
             {currentContent.contact.description}
           </p>
           
           <a
             href="mailto:af.alquwayfili@gmail.com"
-            className="inline-flex items-center px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium transition-colors duration-200 text-lg"
+            className="inline-flex items-center px-8 py-4 bg-white hover:bg-gray-200 text-black rounded-lg font-medium transition-all duration-200 text-lg shadow-lg"
           >
             {currentContent.contact.cta}
           </a>
@@ -511,28 +837,26 @@ const Portfolio = () => {
     </section>
   )
 
-
-
   const Footer = () => (
-    <footer className="border-t border-neutral-800 bg-neutral-900/40 backdrop-blur-sm">
+    <footer className="border-t border-gray-700 bg-gray-900/40 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Left side - Contact Info */}
           <div className="flex flex-col space-y-2">
-            <div className="flex items-center space-x-2 text-neutral-300">
-              <HiMail className="w-5 h-5 text-orange-400" />
+            <div className="flex items-center space-x-2 text-gray-300">
+              <HiMail className="w-5 h-5 text-gray-400" />
               <a 
                 href="mailto:af.alquwayfili@gmail.com"
-                className="text-neutral-300 hover:text-orange-400 transition-colors duration-200 font-medium"
+                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
               >
                 af.alquwayfili@gmail.com
               </a>
             </div>
-            <div className="flex items-center space-x-2 text-neutral-300">
-              <HiPhone className="w-5 h-5 text-orange-400" />
+            <div className="flex items-center space-x-2 text-gray-300">
+              <HiPhone className="w-5 h-5 text-gray-400" />
               <a 
                 href="tel:+966554767376"
-                className="text-neutral-300 hover:text-orange-400 transition-colors duration-200 font-medium"
+                className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
               >
                 +966 554 767 376
               </a>
@@ -541,52 +865,56 @@ const Portfolio = () => {
 
           {/* Right side - Social Icons */}
           <div className="flex items-center space-x-4">
-                          <a
-                href="https://github.com/abdulmalikDs"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-neutral-400 hover:text-orange-400 transition-colors duration-200 hover:bg-neutral-800 rounded-lg"
-                aria-label="GitHub"
-              >
-                <FaGithub className="w-5 h-5" />
-              </a>
-              
-              <a
-                href="https://www.linkedin.com/in/abdulmalik-alquwayfili-0405792a0/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 text-neutral-400 hover:text-orange-400 transition-colors duration-200 hover:bg-neutral-800 rounded-lg"
-                aria-label="LinkedIn"
-              >
+            <a
+              href="https://github.com/abdulmalikDs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-gray-400 hover:text-white transition-colors duration-200 hover:bg-gray-700 rounded-lg"
+              aria-label="GitHub"
+            >
+              <FaGithub className="w-5 h-5" />
+            </a>
+            
+            <a
+              href="https://www.linkedin.com/in/abdulmalik-alquwayfili-0405792a0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 text-gray-400 hover:text-white transition-colors duration-200 hover:bg-gray-700 rounded-lg"
+              aria-label="LinkedIn"
+            >
               <FaLinkedinIn className="w-5 h-5" />
             </a>
           </div>
         </div>
 
         {/* Bottom line - Copyright */}
-        <div className="border-t border-neutral-800 py-4">
-          <p className="text-center text-neutral-500 text-sm">
-            © 2025 Abdulmalik Alquwayfili. All rights reserved.
-          </p>
+        <div className="border-t border-gray-700 py-4">
+          <div className="text-center space-y-1">
+            <p className="text-gray-300 text-sm">
+              © 2025 Abdulmalik Alquwayfili. All rights reserved.
+            </p>
+            <p className="text-gray-500 text-xs">
+              Inspired by Hollow Knight 
+            </p>
+          </div>
         </div>
       </div>
     </footer>
   )
 
   return (
-    <div className="relative bg-neutral-900 text-neutral-100 transition-colors duration-300">
-      {/* Animated Background */}
+    <div className="min-h-screen text-white relative" style={{ backgroundColor: '#0a0a0a' }}>
       <AnimatedBackground />
+      <Navigation />
       
-      {/* All content with relative positioning to appear above background */}
-      <div className="relative z-10">
-        <Navigation />
+      <main className="relative z-10">
         <AboutSection />
         <ExperienceSection />
         <ProjectsSection />
         <ContactSection />
-        <Footer />
-      </div>
+      </main>
+      
+      <Footer />
     </div>
   )
 }

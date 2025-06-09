@@ -8,54 +8,61 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Claude-inspired soft neutrals with ivory whites and muted grays
-        neutral: {
-          50: '#fefcf8',  // Warm ivory white
-          100: '#faf8f3', // Soft ivory
-          150: '#f6f4f0', // Light warm gray
-          200: '#f0eeea', // Gentle warm gray
-          300: '#e6e3df', // Muted gray
-          400: '#d0ccc6', // Soft gray
-          500: '#a8a49e', // Balanced gray
-          600: '#7c7872', // Medium gray
-          700: '#4a4641', // Dark warm gray
-          800: '#2d2b28', // Rich dark gray
-          900: '#1a1917', // Deep charcoal
+        // Pure monochrome base
+        black: '#000000',
+        white: '#ffffff',
+        
+        // Comprehensive grayscale system
+        gray: {
+          50: '#fafafa',   // Ultra light gray
+          100: '#f5f5f5',  // Very light gray
+          200: '#e5e5e5',  // Light gray
+          300: '#d4d4d4',  // Soft gray
+          400: '#a3a3a3',  // Medium light gray
+          500: '#737373',  // Medium gray
+          600: '#525252',  // Medium dark gray
+          700: '#404040',  // Dark gray
+          800: '#262626',  // Very dark gray
+          900: '#171717',  // Ultra dark gray
+          950: '#0a0a0a'   // Almost black gray
         },
-        // Muted accent colors for subtle highlights
+
+        // Single electric blue accent
         accent: {
-          50: '#f8f7f6',
-          100: '#f0efed',
-          200: '#e3e1dd',
-          300: '#d1cdc6',
-          400: '#b8b2a8',
-          500: '#9d9488',
-          600: '#7c756a', 
-          700: '#5c564d',
-          800: '#3d3831',
-          900: '#201e1b',
-        },
-        // Soft primary colors for links and interactive elements  
-        primary: {
-          50: '#f7f8f9',
-          100: '#eef0f3',
-          200: '#d9dde3',
-          300: '#bbc3cd',
-          400: '#95a2b1',
-          500: '#6b7884',
-          600: '#4a5568',
-          700: '#2d3748',
-          800: '#1a202c',
-          900: '#171923',
+          50: '#eff6ff',   // Ultra light blue
+          100: '#dbeafe',  // Very light blue
+          200: '#bfdbfe',  // Light blue
+          300: '#93c5fd',  // Soft blue
+          400: '#60a5fa',  // Medium light blue
+          500: '#0080ff',  // Electric blue (main accent)
+          600: '#0066cc',  // Rich blue
+          700: '#004d99',  // Deep blue
+          800: '#003366',  // Very deep blue
+          900: '#001a33',  // Ultra deep blue
+          950: '#000d1a'   // Almost black blue
         }
       },
+      
+      // Monochrome gradient backgrounds
+      backgroundImage: {
+        'gradient-mono': 'linear-gradient(135deg, #000000, #404040, #737373)',
+        'gradient-mono-light': 'linear-gradient(135deg, #ffffff, #f5f5f5, #e5e5e5)',
+        'gradient-accent': 'linear-gradient(135deg, #0080ff, #0066cc, #004d99)',
+        'gradient-mono-accent': 'linear-gradient(135deg, #000000, #0080ff, #000000)',
+        'gradient-radial-accent': 'radial-gradient(circle, #0080ff, #000000)'
+      },
+
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['Fira Code', 'monospace'],
       },
+      
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.5s ease-out',
+        'purple-pulse': 'purplePulse 2s ease-in-out infinite',
+        'accent-pulse': 'accentPulse 2s ease-in-out infinite',
+        'gradient-shift': 'gradientShift 3s ease-in-out infinite',
         first: "moveVertical 30s ease infinite",
         second: "moveInCircle 20s reverse infinite",
         third: "moveInCircle 40s linear infinite",
@@ -64,6 +71,7 @@ export default {
         gradient: "gradient 8s linear infinite",
         rainbow: "rainbow 8s ease-in-out infinite",
       },
+      
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
@@ -72,6 +80,22 @@ export default {
         slideUp: {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        purplePulse: {
+          '0%, 100%': { 
+            boxShadow: '0 0 0 0 rgba(168, 85, 247, 0.7)' 
+          },
+          '50%': { 
+            boxShadow: '0 0 0 10px rgba(168, 85, 247, 0)' 
+          },
+        },
+        gradientShift: {
+          '0%, 100%': { 
+            backgroundPosition: '0% 50%' 
+          },
+          '50%': { 
+            backgroundPosition: '100% 50%' 
+          },
         },
         moveHorizontal: {
           "0%": {
