@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo, memo } from 'react'
 import { motion } from 'framer-motion'
 import { AnimatedBackground, AnimatedTimeline } from '../components/ui/animated-background'
 import { InteractiveSkills } from '../components/sections/InteractiveSkills'
@@ -23,29 +23,38 @@ const Portfolio = () => {
     }
   }
 
-  // Track active section on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['about', 'experience', 'projects', 'contact']
-      const scrollPosition = window.scrollY + 100
+  // Track active section on scroll with throttling - TEMPORARILY DISABLED
+  // useEffect(() => {
+  //   let ticking = false
 
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
-          }
-        }
-      }
-    }
+  //   const handleScroll = () => {
+  //     if (!ticking) {
+  //       requestAnimationFrame(() => {
+  //         const sections = ['about', 'experience', 'projects', 'contact']
+  //         const scrollPosition = window.scrollY + 100
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  //         for (const section of sections) {
+  //           const element = document.getElementById(section)
+  //           if (element) {
+  //             const { offsetTop, offsetHeight } = element
+  //             if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+  //               // Only update if the section actually changed
+  //               setActiveSection(prev => prev !== section ? section : prev)
+  //               break
+  //             }
+  //           }
+  //         }
+  //         ticking = false
+  //       })
+  //       ticking = true
+  //     }
+  //   }
 
-  const content = {
+  //   window.addEventListener('scroll', handleScroll, { passive: true })
+  //   return () => window.removeEventListener('scroll', handleScroll)
+  // }, [])
+
+  const content = useMemo(() => ({
     en: {
       nav: {
         about: 'About',
@@ -199,7 +208,7 @@ const Portfolio = () => {
         cta: 'Say Hello!'
       }
     }
-  }
+  }), [])
 
   const currentContent = content['en']
 
@@ -246,9 +255,7 @@ const Portfolio = () => {
                 <button
                   key={key}
                   onClick={() => scrollToSection(key)}
-                  className={`text-sm font-medium transition-colors duration-200 hover:text-orange-400 ${
-                    activeSection === key ? 'text-orange-400' : 'text-neutral-300'
-                  }`}
+                  className="text-sm font-medium transition-colors duration-200 hover:text-orange-400 text-neutral-300"
                 >
                   {label}
                 </button>
@@ -385,8 +392,8 @@ const Portfolio = () => {
                 key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true, margin: "-100px" }}
                 className="bg-neutral-800/30 rounded-lg p-8 hover:bg-neutral-800/50 transition-all duration-300 relative group"
               >
                 {project.featured && (
