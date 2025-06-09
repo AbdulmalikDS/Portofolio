@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { AnimatedGradientText, RainbowButton } from '../components/ui/modern-theme'
 import ExperienceTimeline from '../components/sections/ExperienceTimeline'
+import { getAssetPath } from '../utils/paths'
 import { 
   HiDownload, 
   HiMail, 
@@ -143,7 +144,7 @@ const Home = () => {
                   <span>{content.cta.contact}</span>
                 </a>
                 
-                <a href="/Portofolio/resume.pdf" target="_blank" rel="noopener noreferrer">
+                <a href={getAssetPath('resume.pdf')} target="_blank" rel="noopener noreferrer">
                   <RainbowButton>
                     <HiDownload className="w-5 h-5 mr-2" />
                     {content.cta.resume}

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { AnimatedGradientText, RainbowButton } from '../components/ui/modern-theme'
 import { InteractiveSkills } from '../components/sections/InteractiveSkills'
 import { HiDownload, HiMail, HiLocationMarker, HiGlobeAlt, HiChip, HiCode, HiAcademicCap, HiLightningBolt } from 'react-icons/hi'
+import { getAssetPath } from '../utils/paths'
 
 const About = () => {
   const content = {
@@ -206,7 +207,7 @@ const About = () => {
                 <span>{content.cta.contact}</span>
               </a>
               
-              <a href="/Portofolio/resume.pdf" target="_blank" rel="noopener noreferrer">
+              <a href={getAssetPath('resume.pdf')} target="_blank" rel="noopener noreferrer">
                 <RainbowButton>
                   <HiDownload className="w-5 h-5 mr-2" />
                   {content.cta.resume}
