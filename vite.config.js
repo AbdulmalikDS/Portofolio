@@ -8,25 +8,17 @@ export default defineConfig(({ command }) => {
     build: {
       outDir: 'dist',
       assetsDir: 'assets'
-    },
-    server: {
-      port: 3000,        // Your preferred port
-      open: true,        // Automatically open browser
-      host: true,        // Allow external connections
-      middlewareMode: false,
-      // Add middleware to handle direct access to files
-      configureServer(server) {
-        server.middlewares.use('/resume.pdf', (req, res, next) => {
-          res.writeHead(301, { Location: '/Portofolio/resume.pdf' });
-          res.end();
-        });
-      }
     }
   }
 
   if (command === 'serve') {
     // Development
     config.base = '/'
+    config.server = {
+      port: 3000,
+      open: true,
+      host: true
+    }
   } else {
     // Production (GitHub Pages)
     config.base = '/Portofolio/'
