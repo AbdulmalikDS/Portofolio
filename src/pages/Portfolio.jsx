@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { AnimatedBackground, AnimatedTimeline } from '../components/ui/animated-background'
 import { InteractiveSkills } from '../components/sections/InteractiveSkills'
 import { trackDownload, trackContactForm, trackExternalLink, trackEvent } from '../lib/analytics'
-import { getAssetPath } from '../utils/paths'
+
 
 import { 
   HiExternalLink,
@@ -393,7 +393,7 @@ const Portfolio = () => {
                   </a>
                   
                   <a
-                    href={getAssetPath('resume.pdf')}
+                    href="/Portofolio/resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => trackDownload('resume.pdf')}
