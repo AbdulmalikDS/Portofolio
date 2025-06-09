@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, memo } from 'react'
 import { motion } from 'framer-motion'
 import { AnimatedBackground, AnimatedTimeline } from '../components/ui/animated-background'
 import { InteractiveSkills } from '../components/sections/InteractiveSkills'
+import { trackDownload, trackContactForm, trackExternalLink, trackEvent } from '../lib/analytics'
 
 import { 
   HiExternalLink,
@@ -383,6 +384,7 @@ const Portfolio = () => {
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                                   <a
                     href="mailto:af.alquwayfili@gmail.com"
+                    onClick={() => trackContactForm('email')}
                     className="inline-flex items-center px-6 py-3 bg-gray-800 hover:bg-white hover:text-black text-white rounded-lg transition-all duration-200 shadow-lg"
                   >
                     <HiMail className="w-5 h-5 mr-2" />
@@ -393,6 +395,7 @@ const Portfolio = () => {
                     href="/Portofolio/resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackDownload('resume.pdf')}
                     className="inline-flex items-center px-6 py-3 border border-gray-500 text-gray-200 hover:bg-white hover:text-black rounded-lg transition-all duration-200"
                   >
                     <HiDownload className="w-5 h-5 mr-2" />
@@ -818,6 +821,7 @@ const Portfolio = () => {
           
           <a
             href="mailto:af.alquwayfili@gmail.com"
+            onClick={() => trackContactForm('email_contact_section')}
             className="inline-flex items-center px-8 py-4 bg-white hover:bg-gray-200 text-black rounded-lg font-medium transition-all duration-200 text-lg shadow-lg"
           >
             {currentContent.contact.cta}
@@ -859,6 +863,7 @@ const Portfolio = () => {
               href="https://github.com/abdulmalikDs"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackExternalLink('https://github.com/abdulmalikDs')}
               className="p-2 text-gray-400 hover:text-white transition-colors duration-200 hover:bg-gray-700 rounded-lg"
               aria-label="GitHub"
             >
@@ -869,6 +874,7 @@ const Portfolio = () => {
               href="https://www.linkedin.com/in/abdulmalik-alquwayfili-0405792a0/"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackExternalLink('https://www.linkedin.com/in/abdulmalik-alquwayfili-0405792a0/')}
               className="p-2 text-gray-400 hover:text-white transition-colors duration-200 hover:bg-gray-700 rounded-lg"
               aria-label="LinkedIn"
             >
