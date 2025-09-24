@@ -11,30 +11,30 @@ const About = () => {
     subtitle: 'Passionate AI/ML Engineer & Researcher',
     intro: {
       title: 'Hello, I\'m Abdulmalik',
-      description: 'Senior Information Systems student at IMSIU with a deep passion for artificial intelligence and machine learning. Currently working as an AI Developer Intern at Tahakom. I specialize in NLP technologies and have hands-on experience building intelligent systems that solve real-world problems.'
+      description: 'AI Developer at TAHAKOM specializing in advanced NLP, LLMs, and Agentic AI. Recently graduated from IMSIU with a Bachelor\'s in Information Systems and completed Stanford\'s CS234: Reinforcement Learning. I architect and deploy cutting-edge AI solutions that deliver measurable business value through research-backed methods.'
     },
     background: {
       title: 'Background',
-      content: 'Currently pursuing my Bachelor\'s degree in Information Systems at Imam Muhammad ibn Saud Islamic University (IMSIU) while simultaneously advancing my knowledge through Stanford\'s CS234: Reinforcement Learning course. My journey in AI began with a fascination for how machines can understand and process human language, leading me to specialize in Natural Language Processing.'
+      content: 'Recently graduated with a Bachelor\'s degree in Information Systems from Imam Muhammad ibn Saud Islamic University (IMSIU) and completed Stanford\'s CS234: Reinforcement Learning course. Currently working as an AI Developer at TAHAKOM, where I architect and deploy advanced AI solutions. My journey in AI began with a fascination for how machines can understand and process human language, leading me to specialize in Natural Language Processing, Large Language Models, and Agentic AI systems.'
     },
     expertise: {
       title: 'Technical Expertise',
       skills: [
-        { icon: HiChip, name: 'Machine Learning', description: 'BERT, Transformers, NLP Pipelines' },
-        { icon: HiCode, name: 'Programming', description: 'Python, JavaScript, SQL, Git' },
-        { icon: HiLightningBolt, name: 'AI Frameworks', description: 'TensorFlow, PyTorch, Hugging Face' },
-        { icon: HiGlobeAlt, name: 'Cloud Platforms', description: 'Azure ML, Docker, FastAPI' }
+        { icon: HiChip, name: 'Advanced ML', description: 'LangGraph, MCPs, DPO, RLHF, LoRA, DeepSpeed' },
+        { icon: HiCode, name: 'Programming', description: 'Python, JavaScript, SQL, CUDA, Rust, C++' },
+        { icon: HiLightningBolt, name: 'AI Frameworks', description: 'Hugging Face, LangChain, PyTorch, vLLM' },
+        { icon: HiGlobeAlt, name: 'Cloud Platforms', description: 'AWS SageMaker, HyperPod, Trainium, A100' }
       ]
     },
     interests: {
       title: 'Interests & Passions',
       items: [
-        'Arabic Natural Language Processing',
-        'Reinforcement Learning & Deep RL',
-        'MLOps and Model Deployment',
-        'AI Ethics and Responsible AI',
-        'Tech Education and Knowledge Sharing',
-        'Open Source Contributions'
+        'Multi-Agent AI Systems & Autonomous Agents',
+        'Quantum Computing & Post-Quantum Cryptography',
+        'Advanced LLM Training & Fine-tuning',
+        'Agentic AI & Tool Calling Systems',
+        'Real-time AI Applications & MLOps',
+        'Open Source AI Research & Contributions'
       ]
     },
     cta: {

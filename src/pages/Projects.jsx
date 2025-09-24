@@ -17,17 +17,56 @@ const Projects = () => {
     },
     projects: [
       {
-        id: 'farqad',
-        title: 'Farqad - Financial RAG Chatbot',
-        description: 'Farqad is a RAG Based AI-powered financial bilingual chatbot that supports Arabic and English developed to help individuals and organizations in managing their finances.',
-        tags: ['RAG', 'Bilingual', 'JavaScript', 'Financial AI', 'NLP'],
-        icon: HiChatAlt,
+        id: 'quantigence',
+        title: 'Quantigence - Multi-Agent AI Framework',
+        description: 'Independent research on post-quantum cryptographic threats using a multi-agent system coordinating five quantized LLMs (Qwen2.5, Mistral, Llama3.1, Phi-3, Gemma2). Runs on consumer GPUs with Q4_K_M quantization and CUDA acceleration.',
+        tags: ['Multi-Agent', 'Quantum Computing', 'MCPs', 'LLMs', 'Research'],
+        icon: HiChip,
+        color: 'accent',
+        featured: true,
+        metrics: ['5 Quantized LLMs', 'Consumer GPU', 'MCP Integration'],
+        tech: 'Python • MCPs • CUDA • Multi-Agent Systems',
+        github: 'https://github.com/AbdulmalikDS/Quantigence',
+        updated: 'Jun 2025'
+      },
+      {
+        id: 'arabian-sheep-classification',
+        title: 'Arabian Sheep Classification - Kaggle Winner',
+        description: 'Scored First in the leaderboard Day One and developed AI system for classifying 7 Arabian sheep breeds celebrating Eid al-Adha heritage, achieving championship-level 96.67% macro F1 score using ConvNeXt deep learning architecture.',
+        tags: ['Computer Vision', 'CNN', 'Kaggle', 'ConvNeXt', 'Deep Learning'],
+        icon: HiLightningBolt,
         color: 'primary',
         featured: true,
+        metrics: ['96.67% F1 Score', 'Day 1 Leaderboard', 'ConvNeXt Architecture'],
+        tech: 'Python • ConvNeXt • Computer Vision • Deep Learning',
+        github: 'https://github.com/AbdulmalikDS/Arabian-Sheep-Classification',
+        updated: 'Jun 2025'
+      },
+      {
+        id: 'multi-agent-visualizer',
+        title: 'Multi-Agent System Visualizer',
+        description: 'A sophisticated 3D visualization platform for multi-agent research systems with real-time AI-powered research capabilities. Features advanced visualization of agent interactions and system dynamics.',
+        tags: ['3D Visualization', 'Multi-Agent', 'JavaScript', 'Research', 'AI'],
+        icon: HiGlobeAlt,
+        color: 'accent',
+        featured: true,
+        metrics: ['3D Visualization', 'Real-time AI', 'Research Platform'],
+        tech: 'JavaScript • Three.js • Multi-Agent Systems • 3D',
+        github: 'https://github.com/AbdulmalikDS/Multi-Agent-System-Visualizer',
+        updated: 'Sep 2025'
+      },
+      {
+        id: 'farqad',
+        title: 'Farqad - Financial RAG Chatbot',
+        description: 'Farqad addresses the challenge of simplifying financial management and advice for Arabic and English-speaking users by developing a bilingual RAG chatbot with state-of-the-art models, highly engineered and maintainable code.',
+        tags: ['RAG', 'Bilingual', 'Financial AI', 'NLP', 'LLM'],
+        icon: HiChatAlt,
+        color: 'primary',
+        featured: false,
         metrics: ['Bilingual Support', 'RAG Architecture', 'Financial Domain'],
-        tech: 'JavaScript • RAG • Financial AI • Chatbot',
+        tech: 'Python • RAG • LangChain • Financial AI',
         github: 'https://github.com/AbdulmalikDS/Farqad',
-        updated: 'May 25, 2025'
+        updated: 'May 2025'
       },
       {
         id: 'quantum-computing-agent',
@@ -45,16 +84,16 @@ const Projects = () => {
       },
       {
         id: 'perceive-ai',
-        title: 'PerceiveAI - Sports Accessibility',
-        description: 'PerceiveAI is an innovative project aimed at making sports commentary accessible to the deaf and hard-of-hearing community. By leveraging cutting-edge AI technologies, PerceiveAI translates live sports commentary into sign language.',
-        tags: ['JavaScript', 'Computer Vision', 'Accessibility', 'Real-time', 'AI'],
+        title: 'PerceiveAI - AI League Finalist',
+        description: 'This project aimed at making sports commentary accessible to the deaf and hard-of-hearing. By leveraging cutting-edge AI technologies, PerceiveAI translates live sports commentary into text then to sign language using animated avatars.',
+        tags: ['AI League', 'Accessibility', 'Real-time', 'Sign Language', 'Computer Vision'],
         icon: HiLightningBolt,
         color: 'primary',
-        featured: true,
-        metrics: ['Real-time Translation', 'Accessibility Focus', 'Sports Commentary'],
-        tech: 'JavaScript • Computer Vision • AI • Real-time',
+        featured: false,
+        metrics: ['AI League Finalist', 'Accessibility Focus', 'Animated Avatars'],
+        tech: 'Python • Computer Vision • AI • Real-time Translation',
         github: 'https://github.com/AbdulmalikDS/PerceiveAI',
-        updated: 'Apr 9, 2025'
+        updated: 'Apr 2025'
       },
       {
         id: 'stc-recommendations',
@@ -120,6 +159,19 @@ const Projects = () => {
         tech: 'Jupyter Notebook • Mistral AI • LLM • Educational',
         github: 'https://github.com/AbdulmalikDS/WAE-X-IMISU-workshop',
         updated: 'Feb 18, 2025'
+      },
+      {
+        id: 'langgraph-runtime',
+        title: 'langgraph-runtime-inmem-open',
+        description: 'Open-source LangGraph runtime tools for agent memory management. A contribution to the LangGraph ecosystem providing in-memory runtime capabilities for autonomous agents.',
+        tags: ['LangGraph', 'Open Source', 'Memory Management', 'Agents', 'Runtime'],
+        icon: HiCode,
+        color: 'accent',
+        featured: false,
+        metrics: ['LangGraph Contribution', 'Open Source', 'Memory Management'],
+        tech: 'Python • LangGraph • Open Source • Agent Runtime',
+        github: 'https://github.com/AbdulmalikDS/langgraph-runtime-inmem-open',
+        updated: 'Jul 2025'
       },
       {
         id: 'neuro-trading-rl',

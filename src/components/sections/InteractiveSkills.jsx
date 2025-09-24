@@ -14,12 +14,12 @@ export const InteractiveSkills = () => {
         programming: {
           name: 'Programming Languages',
           color: '#9ca3af',
-          skills: ['Python', 'Java', 'JavaScript', 'C++', 'SQL', 'Git', 'CUDA', 'R', 'Rust', 'PHP']
+          skills: ['Python', 'Java', 'JavaScript', 'SQL', 'CUDA', 'Rust', 'C++', 'R', 'PHP', 'Git']
         },
         libraries: {
           name: 'Libraries & Frameworks',
           color: '#9ca3af',
-          skills: ['Transformers', 'TensorFlow', 'PyTorch', 'Keras', 'Scikit-learn', 'NLTK', 'OpenCV', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'FastAPI', 'OpenAI','Ollama', 'Pydantic', 'LangChain', 'BERT', 'APIs', 'JSON', 'wandb']
+          skills: ['LangGraph', 'LangChain', 'Transformers', 'PyTorch', 'Hugging Face', 'vLLM', 'Ollama', 'Pydantic', 'FastAPI', 'TensorFlow', 'Keras', 'Scikit-learn', 'NLTK', 'OpenCV', 'Pandas', 'NumPy', 'Matplotlib', 'Seaborn', 'wandb', 'LogFire']
         },
         databases: {
           name: 'Databases',
@@ -27,14 +27,14 @@ export const InteractiveSkills = () => {
           skills: ['PostgreSQL', 'MongoDB', 'Qdrant', 'ChromaDB', 'Supabase', 'DBeaver', 'sqlalchemy', 'alembic']
         },
         devops: {
-          name: 'DevOps & Environments',
+          name: 'DevOps & Cloud',
           color: '#9ca3af',
-          skills: ['Linux', 'Ubuntu', 'Docker', 'Conda', 'Notebooks', 'Colab', 'Postman', 'cURL']
+          skills: ['AWS SageMaker', 'HyperPod', 'Trainium', 'A100', 'Linux', 'Ubuntu', 'Docker', 'Conda', 'Jupyter', 'Colab', 'Postman', 'cURL', 'Bash', 'SLURM', 'PyTorch Lightning']
         },
         concepts: {
-          name: 'Research Interests',
+          name: 'AI Research & Methods',
           color: '#9ca3af',
-          skills: ['AGI', 'Agentic AI', 'MCPs', 'CNNs', 'RNNs', 'Attention', 'RLHF', 'PPO', 'DQN', 'Policy Gradients', 'LLMOps', 'MLOps', 'GenAI', 'Quantum Computing']
+          skills: ['Multi-Agent Systems', 'MCPs', 'Agentic AI', 'LoRA', 'DeepSpeed', 'DPO', 'RLHF', 'SFT', 'GRPO', 'RAG', 'Quantization', 'MOE', 'MOA', 'CNNs', 'RNNs', 'Attention', 'Transformers', 'LLMOps', 'MLOps', 'Quantum Computing', 'Post-Quantum Cryptography']
         }
       }
     }

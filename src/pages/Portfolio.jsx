@@ -153,34 +153,39 @@ const Portfolio = () => {
         experiences: [
           {
             id: 'tahakom-ai',
-            title: 'AI Developer Intern',
-            company: 'Tahakom',
-            fullCompanyName: 'Tahakom · NLP Department',
-            type: 'Internship',
+            title: 'Artificial Intelligence Developer',
+            company: 'TAHAKOM',
+            fullCompanyName: 'TAHAKOM • NLP Department',
+            type: 'Full-time',
             location: 'Riyadh, Saudi Arabia',
             period: 'Jul 2025 - Present',
             duration: 'Ongoing',
-            description: 'COOP trainee joining a newly established NLP department, contributing to projects in text and speech processing, generation, and understanding based on team assignments and evolving project priorities.',
-            achievements: [],
-            skills: ['Natural Language Processing', 'Text Generation', 'Retrieval-Augmented Generation (RAG)', 'Large Language Models (LLMs)', 'Applied Research'],
+            description: 'Architecting and deploying continuous pre-training and post-training pipelines on AWS SageMaker Hyperpod, leveraging Trainium, GPU clusters, and Hugging Face Optimum Neuron for advanced alignment.',
+            achievements: [
+              'Engineered parameter-efficient fine-tuning pipeline for Qwen-2.5-72B model using LoRA and DeepSpeed ZeRO-3 on AWS A100',
+              'Developed LangGraph-based autonomous agents with dynamic tool calling and real code execution',
+              'Designed and orchestrated 5+ autonomous agents via MCPs, integrating ArXiv and GitHub APIs',
+              'Conducted deep literature reviews on agentic AI frameworks and state-of-the-art LLM architectures'
+            ],
+            skills: ['AWS SageMaker', 'LangGraph', 'MCPs', 'LoRA', 'DeepSpeed', 'RLHF', 'DPO', 'Autonomous Agents', 'Hugging Face Optimum Neuron'],
             status: 'current',
             color: 'accent'
           },
           {
             id: 'stealth-ml',
             title: 'Machine Learning Engineer',
-            company: 'Stealth Startup',
-            type: 'Part-time',
+            company: 'Stealth',
+            type: 'Full-time',
             location: 'Riyadh, Saudi Arabia',
             period: 'Mar 2025 - May 2025',
             duration: '3 months',
-            description: 'Redesigned existing NLP processes by replacing manual tasks with automated pipelines powered by BERT architectures.',
+            description: 'Trained, fine-tuned, and evaluated 10+ open-source BERT-based models (e.g., CAMeL BERT, AraBERT), achieving over 90% accuracy with <60ms latency, optimized for real-time applications.',
             achievements: [
-              'Trained, fine-tuned, and evaluated 10+ open-source BERT-based models (e.g., CAMeL BERT, AraBERT), achieving over 90% accuracy with <60ms latency',
-              'Developed and deployed advanced machine learning models for sentiment analysis, sarcasm detection, and dialect classification in Arabic',
-              'Built scalable, AI-powered analytics systems that deliver actionable insights from unstructured text'
+              'Developed and deployed advanced machine learning models for sentiment analysis, sarcasm detection, and location distribution analysis',
+              'Built scalable, AI-powered analytics systems that deliver actionable insights from unstructured text',
+              'Empowered business stakeholders to make fast, data-driven decisions through intelligent analytics'
             ],
-            skills: ['Strategy', 'BERT ', 'Natural Language Processing', 'Fine-tuning', 'Data Analytics', 'Model Optimization', 'FastAPI'],
+            skills: ['BERT', 'Natural Language Processing', 'Fine-tuning', 'Data Analytics', 'Model Optimization', 'Real-time Applications', 'Arabic NLP'],
             status: 'done',
             color: 'dark'
           },
@@ -227,12 +232,36 @@ const Portfolio = () => {
         subtitle: 'Featured Work & Open Source Contributions',
         projects: [
           {
-            id: 'farqad',
-            title: 'Farqad',
-            description: 'A bilingual financial RAG chatbot built using ALLaM, LangChain, Qdrant, and FastAPI for intelligent financial conversations.',
-            tags: ['LangChain', 'ALLaM', 'RAG', 'FastAPI', 'Ollama', 'Qdrant', 'Docker'],
-            github: 'https://github.com/AbdulmalikDS/Farqad',
+            id: 'quantigence',
+            title: 'Quantigence - Multi-Agent AI Framework',
+            description: 'Independent research on post-quantum cryptographic threats using a multi-agent system coordinating five quantized LLMs (Qwen2.5, Mistral, Llama3.1, Phi-3, Gemma2).',
+            tags: ['Multi-Agent', 'Quantum Computing', 'MCPs', 'LLMs', 'Research', 'CUDA'],
+            github: 'https://github.com/AbdulmalikDS/Quantigence',
             featured: true
+          },
+          {
+            id: 'arabian-sheep-classification',
+            title: 'Arabian Sheep Classification - Kaggle Winner',
+            description: 'Scored First in the leaderboard Day One and developed AI system for classifying 7 Arabian sheep breeds, achieving championship-level 96.67% macro F1 score using ConvNeXt.',
+            tags: ['Computer Vision', 'CNN', 'Kaggle', 'ConvNeXt', 'Deep Learning', 'Championship'],
+            github: 'https://github.com/AbdulmalikDS/Arabian-Sheep-Classification',
+            featured: true
+          },
+          {
+            id: 'multi-agent-visualizer',
+            title: 'Multi-Agent System Visualizer',
+            description: 'A sophisticated 3D visualization platform for multi-agent research systems with real-time AI-powered research capabilities.',
+            tags: ['3D Visualization', 'Multi-Agent', 'JavaScript', 'Research', 'AI', 'Three.js'],
+            github: 'https://github.com/AbdulmalikDS/Multi-Agent-System-Visualizer',
+            featured: true
+          },
+          {
+            id: 'farqad',
+            title: 'Farqad - Financial RAG Chatbot',
+            description: 'Farqad addresses the challenge of simplifying financial management and advice for Arabic and English-speaking users by developing a bilingual RAG chatbot with state-of-the-art models.',
+            tags: ['RAG', 'Bilingual', 'Financial AI', 'NLP', 'LLM', 'LangChain'],
+            github: 'https://github.com/AbdulmalikDS/Farqad',
+            featured: false
           },
           {
             id: 'neuro-trading-rl',
@@ -245,11 +274,11 @@ const Portfolio = () => {
           },
           {
             id: 'perceive-ai',
-            title: 'PerceiveAI',
-            description: 'Real-time AI system that translates live sports commentary to sign language via animated avatars, making sports accessible for the deaf community.',
-            tags: ['JavaScript', 'Computer Vision', 'SigML', 'CWASA', 'Speech Recognition', 'NLP'],
+            title: 'PerceiveAI - AI League Finalist',
+            description: 'This project aimed at making sports commentary accessible to the deaf and hard-of-hearing. By leveraging cutting-edge AI technologies, PerceiveAI translates live sports commentary into text then to sign language using animated avatars.',
+            tags: ['AI League', 'Accessibility', 'Real-time', 'Sign Language', 'Computer Vision', 'Finalist'],
             github: 'https://github.com/AbdulmalikDS/PerceiveAI',
-            featured: true
+            featured: false
           },
           {
             id: 'quantum-research',
@@ -302,7 +331,7 @@ const Portfolio = () => {
             {/* Social Links */}
             <div className="flex items-center space-x-3">
               <a
-                href="https://github.com/abdulmalikDs"
+                href="https://github.com/AbdulmalikDS"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-colors duration-200 text-gray-400 hover:text-white"
@@ -352,8 +381,8 @@ const Portfolio = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="mb-8">
-              <span className="text-gray-300 text-lg font-medium">
-                {currentContent.about.greeting}
+              <span className="text-gray-300 text-2xl font-medium">
+                {currentContent.about.greeting} 👋
               </span>
             </div>
             
@@ -786,7 +815,7 @@ const Portfolio = () => {
                 Explore more of my work and open-source contributions on GitHub
               </p>
               <a
-                href="https://github.com/abdulmalikDs"
+                href="https://github.com/AbdulmalikDS"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 bg-gray-700/50 hover:bg-gray-700 text-gray-300 hover:text-white rounded-lg transition-all duration-200 border border-gray-700/50 hover:border-gray-600"
@@ -861,10 +890,10 @@ const Portfolio = () => {
           {/* Right side - Social Icons */}
           <div className="flex items-center space-x-4">
             <a
-              href="https://github.com/abdulmalikDs"
+              href="https://github.com/AbdulmalikDS"
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackExternalLink('https://github.com/abdulmalikDs')}
+              onClick={() => trackExternalLink('https://github.com/AbdulmalikDS')}
               className="p-2 text-gray-400 hover:text-white transition-colors duration-200 hover:bg-gray-700 rounded-lg"
               aria-label="GitHub"
             >
